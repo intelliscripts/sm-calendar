@@ -1,0 +1,19 @@
+.sm-calendar-header {
+  width: 100%;
+  height: 50px;
+  border-bottom: 1px solid $border-color;
+  .header-container {
+    display: flex;
+    .header-section {
+      flex: 1;
+      .view-list {
+        margin-top: 9px;
+        float: right;
+        margin-right: 25px;
+        button.view-name {
+          margin: 0px -1px;
+        }
+      }
+    }
+  }
+}

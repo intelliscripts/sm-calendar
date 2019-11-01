@@ -1,0 +1,20 @@
+.sm-button {
+  padding: 7px 10px;
+  box-shadow: none;
+  border: none;
+  font-size: 14px;
+  background: $color-white;
+  outline: none;
+  &.primary {
+    color: var(--theme-color);
+    border: 1px solid var(--theme-color);
+  }
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 0 3px;
+  }
+  &.active {
+    background: var(--theme-color);
+    color: $color-white;
+  }
+}

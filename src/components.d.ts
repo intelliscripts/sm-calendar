@@ -12,9 +12,29 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 export namespace Components {
   interface SmCalendar {
     /**
+    * availableViews
+    */
+    'availableViews': Array<string>;
+    /**
+    * contextDate
+    */
+    'contextDate': string;
+    /**
     * Theme
     */
     'theme': string;
+    /**
+    * timezone
+    */
+    'timezone': string;
+    /**
+    * view
+    */
+    'view': string;
+    /**
+    * weekStartDay
+    */
+    'weekStartDay': string;
   }
   interface SmDemoCalendar {}
 }
@@ -42,9 +62,29 @@ declare global {
 declare namespace LocalJSX {
   interface SmCalendar {
     /**
+    * availableViews
+    */
+    'availableViews'?: Array<string>;
+    /**
+    * contextDate
+    */
+    'contextDate'?: string;
+    /**
     * Theme
     */
     'theme'?: string;
+    /**
+    * timezone
+    */
+    'timezone'?: string;
+    /**
+    * view
+    */
+    'view'?: string;
+    /**
+    * weekStartDay
+    */
+    'weekStartDay'?: string;
   }
   interface SmDemoCalendar {}
 

@@ -1,2 +1,14 @@
 @import "~reset-css/reset.css";
 @import "variables";
+
+@import "custom-styles";
+@import "../calendar/header/header";
+@import "../calendar/views/column/column";
+
+:host {
+  --theme-color: teal;
+}
+
+.sm-calendar {
+  font-family: 'Open Sans', sans-serif;
+}
