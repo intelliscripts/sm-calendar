@@ -1,8 +1,8 @@
-import {Component, Prop, h, Host} from '@stencil/core';
-import moment from 'moment';
+import {Component, Prop, h, Host, State, Watch} from '@stencil/core';
+import moment, {Moment} from 'moment';
 
 import calendar from './calendar/Calendar';
-import {VIEWS} from "./calendar/constants";
+import {INTERNAL_DATE, VIEWS} from "./calendar/constants";
 
 @Component({
   tag: 'sm-calendar',
@@ -24,7 +24,7 @@ export class SmCalendar {
   @Prop({
     reflect: true,
     mutable: true,
-  }) contextDate: string = moment().toISOString();
+  }) contextDate: string = moment().format(INTERNAL_DATE);
 
   /**
    * availableViews
@@ -57,6 +57,12 @@ export class SmCalendar {
     reflect: true,
     mutable: true,
   }) weekStartDay: string = 'sun';
+
+  @State() contextMoment: Moment = moment(this.contextDate, INTERNAL_DATE, this.timezone);
+
+  @Watch('contextDate') handleContextDateChange() {
+    this.contextMoment = moment(this.contextDate, INTERNAL_DATE, this.timezone);
+  }
 
   render() {
     return (

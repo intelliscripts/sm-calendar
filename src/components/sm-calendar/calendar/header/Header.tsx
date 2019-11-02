@@ -1,5 +1,5 @@
 import {h} from "@stencil/core";
-import {VIEW_LABELS} from "../constants";
+import {INTERNAL_DATE, VIEW_LABELS} from "../constants";
 import moment from "moment";
 
 class Header {
@@ -31,7 +31,7 @@ class Header {
         </div>
         <div class='nav-item'>
           <button class='sm-button primary' onClick={() => {
-            component.contextDate = moment().startOf('day').toISOString();
+            component.contextDate = moment().startOf('day').format(INTERNAL_DATE);
           }}>Today</button>
         </div>
         <div class='nav-item'>

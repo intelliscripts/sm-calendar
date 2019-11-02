@@ -1,14 +1,13 @@
 import moment, {Moment} from 'moment';
 
-export function calculateDateRange(contextDate: string, numberOfCols: number, weekStartDay: number) {
-  const contextMoment: Moment = moment(contextDate);
+export function calculateDateRange(contextMoment: Moment, numberOfCols: number, weekStartDay: number) {
 
   if (numberOfCols === 1) {
-    const startMoment: Moment = moment(contextMoment).startOf('day');
-    const endMoment: Moment = moment(contextMoment).endOf('day');
+    const startMoment: Moment = contextMoment.clone().startOf('day');
+    const endMoment: Moment = contextMoment.clone().endOf('day');
     return {startMoment, endMoment};
   } else {
-    let startMoment: Moment = moment(contextMoment).startOf('day');
+    let startMoment: Moment = contextMoment.clone().startOf('day');
     if (weekStartDay <= contextMoment.day())
       startMoment.day(weekStartDay);
     else

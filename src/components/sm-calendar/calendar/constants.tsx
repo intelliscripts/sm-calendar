@@ -41,3 +41,5 @@ export const VIEW_LABELS: VIEW_LABELS = {
   week: 'Week',
   month: 'Month'
 };
+
+export const INTERNAL_DATE: string = 'YYYY-MM-DD';

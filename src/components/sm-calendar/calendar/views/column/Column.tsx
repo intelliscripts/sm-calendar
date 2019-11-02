@@ -1,6 +1,6 @@
 import {h} from "@stencil/core";
 import {calculateDateRange, getBetweenDates} from "./column-utils";
-import {WEEK_DAYS} from "../../constants";
+import {INTERNAL_DATE, WEEK_DAYS} from "../../constants";
 import moment, {Moment} from "moment";
 
 export class Column {
@@ -13,11 +13,11 @@ export class Column {
 
 
   next(component) {
-    component.contextDate = moment(component.contextDate).add(this.numberOfCols, 'day').toISOString();
+    component.contextDate = component.contextMoment.clone().add(this.numberOfCols, 'day').format(INTERNAL_DATE);
   }
 
   prev(component) {
-    component.contextDate = moment(component.contextDate).add(0 - this.numberOfCols, 'day').toISOString();
+    component.contextDate = component.contextMoment.clone().add(0 - this.numberOfCols, 'day').format(INTERNAL_DATE);
   }
 
   constructor() {
@@ -33,7 +33,7 @@ export class Column {
   }
 
   renderView(component) {
-    const range = calculateDateRange(component.contextDate, this.numberOfCols, WEEK_DAYS[component.weekStartDay]);
+    const range = calculateDateRange(component.contextMoment, this.numberOfCols, WEEK_DAYS[component.weekStartDay]);
     const viewDates: Array<Moment> = getBetweenDates(range.startMoment, range.endMoment);
     const stepMoments = this.getSteps();
 
@@ -124,7 +124,7 @@ export class Column {
 
   renderViewHeader(component, viewDates: Array<Moment>) {
     const cls: Array<string> = ['view-header'];
-    const contextMoment = moment(component.contextDate);
+    const {contextMoment} =component;
 
     const dayNames = [];
 
@@ -142,7 +142,7 @@ export class Column {
       dayNames.push(<div class={dateCls.join(' ')}>
         <div class='day-name'>{date.format('dddd')}</div>
         <div class='day-date' onClick={() => {
-          component.contextDate = date.toISOString();
+          component.contextDate = date.format(INTERNAL_DATE);
         }}>
           {date.format('DD')}
         </div>
