@@ -1,5 +1,6 @@
 import {h} from "@stencil/core";
-import {VIEW_LABELS, VIEWS} from "../constants";
+import {VIEW_LABELS} from "../constants";
+import moment from "moment";
 
 class Header {
 
@@ -7,7 +8,7 @@ class Header {
     return (
         <div class='header-container'>
           <div class='header-section'>
-
+            {this.renderViewNavigation(component)}
           </div>
           <div class='header-section'>
 
@@ -16,6 +17,30 @@ class Header {
             {this.renderViewButton(component)}
           </div>
         </div>
+    );
+  }
+
+  renderViewNavigation(component) {
+    return (
+      <div class='view-navigation'>
+        <div class='nav-item'>
+          <div class="left-triangle" onClick={() => {
+            component.viewRenderer.prev(component);
+          }}>
+          </div>
+        </div>
+        <div class='nav-item'>
+          <button class='sm-button primary' onClick={() => {
+            component.contextDate = moment().startOf('day').toISOString();
+          }}>Today</button>
+        </div>
+        <div class='nav-item'>
+          <div class="right-triangle" onClick={() => {
+            component.viewRenderer.next(component);
+          }}>
+          </div>
+        </div>
+      </div>
     );
   }
 

@@ -6,6 +6,13 @@
     display: flex;
     .header-section {
       flex: 1;
+      .view-navigation {
+        margin-top: 7px;
+        margin-left: 100px;
+        .nav-item {
+          display: inline-block;
+        }
+      }
       .view-list {
         margin-top: 9px;
         float: right;

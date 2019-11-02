@@ -6,6 +6,7 @@ class Week extends Column {
   }
 
   public numberOfCols: number = 7;
+
 }
 
 export default new Week();

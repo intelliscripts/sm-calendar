@@ -15,13 +15,14 @@ class Calendar {
 
   render(component) {
     const viewRenderer = this.getViewRenderer(component);
+    component.viewRenderer = viewRenderer;
     return (
       <div class='sm-calendar-container'>
         <header class='sm-calendar-header'>
           {header.render(component)}
         </header>
         <div class='sm-calendar-body'>
-          {viewRenderer.render(component)}
+          {component.viewRenderer.render(component)}
         </div>
       </div>
     );

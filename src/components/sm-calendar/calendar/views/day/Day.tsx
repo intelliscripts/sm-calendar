@@ -6,6 +6,7 @@ class Day extends Column {
   }
 
   public numberOfCols: number = 1;
+
 }
 
 export default new Day();
