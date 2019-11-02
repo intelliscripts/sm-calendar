@@ -17,7 +17,7 @@ class Calendar {
     const viewRenderer = this.getViewRenderer(component);
     component.viewRenderer = viewRenderer;
     return (
-      <div class='sm-calendar-container'>
+      <div class='sm-calendar-container' style={{'--header-height': '50px'}}>
         <header class='sm-calendar-header'>
           {header.render(component)}
         </header>

@@ -9,6 +9,7 @@ export class Column {
   public timeStepDuration: number = 60;//minutes
   public timeStepHeight: number = 40;
   public timeStepFormat: string = 'HH:mm';
+  public viewHeaderHeight: number = 70;
 
 
   next(component) {
@@ -38,7 +39,7 @@ export class Column {
 
     const cls: Array<string> = ['view-wrapper'];
     return (
-      <div class={cls.join(' ')}>
+      <div class={cls.join(' ')} style={{'--left-scale-width': this.leftScaleWidth + 'px', '--time-step-height': this.timeStepHeight + 'px', '--view-header-height': this.viewHeaderHeight + 'px'}}>
         {this.renderViewHeader(component, viewDates)}
         {this.renderViewBody(component, viewDates, stepMoments)}
       </div>
@@ -49,7 +50,7 @@ export class Column {
     const cls: Array<string> = ['view-body'];
 
     return (
-      <div class={cls.join(' ')} style={{'--left-scale-width': this.leftScaleWidth + 'px', '--time-step-height': this.timeStepHeight + 'px'}}>
+      <div class={cls.join(' ')}>
         <div class='view-body-relative'>
           {this.renderLeftScale(component, stepMoments)}
           {this.renderGrid(component, viewDates, stepMoments)}
@@ -113,7 +114,7 @@ export class Column {
     });
 
     return (
-      <div class='left-scale' style={{width: this.leftScaleWidth + 'px'}}>
+      <div class='left-scale'>
         <div class='step-container'>
           {steps}
         </div>
@@ -151,7 +152,7 @@ export class Column {
     return (
       <div class={cls.join(' ')}>
         <div class='row'>
-          <div class='empty-left-scale' style={{width: this.leftScaleWidth + 'px'}}></div>
+          <div class='empty-left-scale'></div>
           {dayNames}
         </div>
       </div>
