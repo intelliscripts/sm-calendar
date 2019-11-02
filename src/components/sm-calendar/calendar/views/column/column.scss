@@ -36,6 +36,9 @@
                 background: var(--theme-color);
                 border:1px solid var(--theme-color);
                 color: $color-white;
+                &:hover {
+                  opacity: 1;
+                }
               }
             }
             &.today {

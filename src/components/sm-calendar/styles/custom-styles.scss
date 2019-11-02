@@ -1,45 +1,45 @@
 .sm-button {
-  padding: 7px 10px;
+  padding: 8px 10px;
   box-shadow: none;
   border: none;
-  font-size: 14px;
+  font-size: 15px;
   background: $color-white;
   outline: none;
   &.primary {
     color: var(--theme-color);
-    border: 1px solid var(--theme-color);
   }
   &:hover {
     cursor: pointer;
-    box-shadow: 0 0 3px;
+    text-decoration: underline;
   }
   &.active {
     background: var(--theme-color);
     color: $color-white;
+    &:hover {
+      text-decoration: none;
+    }
   }
 }
 
 .left-triangle {
-  margin-top: 3px;
-  margin-right: 25px;
+  margin-right: 10px;
   width: 0;
   height: 0;
-  border-top: 7px solid transparent;
-  border-bottom: 7px solid transparent;
-  border-right: 7px solid var(--theme-color);
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 8px solid var(--theme-color);
   &:hover {
     cursor: pointer;
   }
 }
 
 .right-triangle {
-  margin-top: 3px;
-  margin-left: 25px;
+  margin-left: 10px;
   width: 0;
   height: 0;
-  border-top: 7px solid transparent;
-  border-bottom: 7px solid transparent;
-  border-left: 7px solid var(--theme-color);
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 8px solid var(--theme-color);
   &:hover {
     cursor: pointer;
   }
