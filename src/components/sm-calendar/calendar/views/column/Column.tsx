@@ -59,11 +59,11 @@ export class Column {
     );
   }
 
-  renderGrid(component, viewDates: Array<Moment>, stepMoments: Array<Moment>) {
+  renderGrid(_component, viewDates: Array<Moment>, stepMoments: Array<Moment>) {
 
     const rows = [];
 
-    stepMoments.forEach((stepMoment, index) => {
+    stepMoments.forEach((_stepMoment, index) => {
       const cols = [];
 
       viewDates.forEach((viewDate) => {
@@ -104,7 +104,7 @@ export class Column {
     return stepMoments;
   }
 
-  renderLeftScale(component, stepMoments: Array<Moment>) {
+  renderLeftScale(_component, stepMoments: Array<Moment>) {
     const steps = [];
 
     stepMoments.forEach((stepMoment, index) => {
