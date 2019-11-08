@@ -1,6 +1,5 @@
 import moment, {Moment} from 'moment-timezone';
 
-const TIMEZONE = 'GMT';
 const INTERNAL_DATE = 'YYYY-MM-DD';
 
 function getEvent(title: string, description: string, start: string, end: string, text_color: string = '#fff', bg_color: string = 'orange') {
@@ -33,6 +32,6 @@ function generateEvents(contextMoment: Moment) {
 }
 
 export function getEvents() {
-  const contextMoment: Moment = moment().tz(TIMEZONE);
+  const contextMoment: Moment = moment();
   return generateEvents(contextMoment);
 }

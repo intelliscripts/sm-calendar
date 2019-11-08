@@ -1,9 +1,10 @@
 import {h} from "@stencil/core";
 import {getBetweenDates} from "../../utils/common/date-utils";
-import {INTERNAL_FORMAT, WEEK_DAYS} from "../../constants";
+import {INTERNAL_FORMAT} from "../../constants";
 import moment, {Moment} from "moment";
+import {View} from "../view/View";
 
-export class Column {
+export class Column extends View{
   public numberOfCols: number;
   public leftScaleWidth: number = 100;
   public timeStepDuration: number = 60;//minutes
@@ -12,6 +13,7 @@ export class Column {
   public viewHeaderHeight: number = 70;
 
   constructor() {
+    super();
   }
 
   next(component) {
@@ -39,8 +41,9 @@ export class Column {
   }
 
   renderView(component) {
-    const range = this.calculateViewRange(component.contextMoment, WEEK_DAYS[component.weekStartDay]);
-    const viewDates: Array<Moment> = getBetweenDates(range.startMoment, range.endMoment);
+    const {startMoment, endMoment} = component;
+
+    const viewDates: Array<Moment> = getBetweenDates(startMoment, endMoment);
     const stepMoments = this.getSteps();
 
     const cls: Array<string> = ['view-wrapper'];

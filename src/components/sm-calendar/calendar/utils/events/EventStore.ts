@@ -15,9 +15,25 @@ export class EventStore {
     return this.events;
   }
 
+  /**
+   *
+   * @param rawEvents
+   * @param timezone
+   */
   parseEvents(rawEvents: Array<object> = [], timezone: string) {
     rawEvents.forEach((rawEvent) => {
       this.addEvent(rawEvent, timezone);
+    });
+  }
+
+  /**
+   *
+   * @param startMS
+   * @param endMS
+   */
+  getEventsBetween(startMS: number, endMS: number) {
+    return this.getAll().filter((e) => {
+      return !(e.startMS > endMS || e.endMS < startMS || e.endMS === startMS);
     });
   }
 }

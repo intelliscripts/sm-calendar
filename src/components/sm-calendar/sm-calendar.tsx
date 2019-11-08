@@ -2,7 +2,7 @@ import {Component, Prop, h, Host, State, Watch, Event, EventEmitter} from '@sten
 import moment, {Moment} from 'moment';
 
 import calendar from './calendar/Calendar';
-import {EVENTS, INTERNAL_FORMAT, VIEWS} from "./calendar/constants";
+import {EVENTS, INTERNAL_FORMAT, VIEWS, WEEK_DAYS} from "./calendar/constants";
 import eventStore, {EventStore} from "./calendar/utils/events/EventStore";
 
 @Component({
@@ -72,6 +72,8 @@ export class SmCalendar {
    * state variables
    */
   @State() contextMoment: Moment = moment(this.contextDate, INTERNAL_FORMAT.DATE, this.timezone);
+  @State() startMoment: Moment;
+  @State() endMoment: Moment;
   @State() eventStore: EventStore = eventStore;
 
 
@@ -81,6 +83,7 @@ export class SmCalendar {
 
   componentWillLoad() {
     this.eventStore.parseEvents(this.events, this.timezone);
+    this.updateView();
   }
 
   /**
@@ -88,10 +91,11 @@ export class SmCalendar {
    */
   @Watch('contextDate') handleContextDateChange() {
     this.contextMoment = moment(this.contextDate, INTERNAL_FORMAT.DATE, this.timezone);
+    this.updateView();
   }
 
-  @Watch('view') handleViewChange(view: string) {
-    this.viewChange.emit(view);
+  @Watch('view') handleViewChange() {
+    this.updateView();
   }
 
   /**
@@ -104,6 +108,23 @@ export class SmCalendar {
     cancelable: true,
     bubbles: true,
   }) viewChange: EventEmitter;
+
+  /**
+   * functions
+   */
+
+  updateView() {
+    const viewRange = calendar.getViewRenderer(this).calculateViewRange(this.contextMoment, WEEK_DAYS[this.weekStartDay]);
+    this.startMoment = viewRange.startMoment;
+    this.endMoment = viewRange.endMoment;
+
+    this.viewChange.emit({
+      view: this.view,
+      start: this.startMoment.format(INTERNAL_FORMAT.DATE_TIME),
+      end: this.endMoment.format(INTERNAL_FORMAT.DATE_TIME)
+    });
+
+  }
 
   /**
    * main renderer
