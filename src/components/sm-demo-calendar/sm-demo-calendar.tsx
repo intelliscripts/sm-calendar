@@ -1,4 +1,5 @@
 import {Component, h, State} from '@stencil/core';
+import {getEvents} from './utils/event-utils';
 
 @Component({
   tag: 'sm-demo-calendar',
@@ -8,11 +9,12 @@ import {Component, h, State} from '@stencil/core';
 export class SmDemoCalendar {
 
   @State() weekStartDay: string = 'sun';
+  @State() events: Array<object> = getEvents();
 
   render() {
     return (
       <div class='sm-demo-calendar'>
-        <sm-calendar></sm-calendar>
+        <sm-calendar events={this.events}/>
       </div>
     );
   }

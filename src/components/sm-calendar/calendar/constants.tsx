@@ -1,14 +1,6 @@
-interface WEEK_DAYS {
-  sun: number;
-  mon: number;
-  tue: number;
-  wed: number;
-  thu: number;
-  fri: number;
-  sat: number
-}
+import {INTERFACE_VIEW_LABELS, INTERFACE_VIEWS, INTERFACE_WEEK_DAYS, INTERFACE_INTERNAL_FORMAT} from "./interface";
 
-export const WEEK_DAYS: WEEK_DAYS = {
+export const WEEK_DAYS: INTERFACE_WEEK_DAYS = {
   sun: 0,
   mon: 1,
   tue: 2,
@@ -18,28 +10,22 @@ export const WEEK_DAYS: WEEK_DAYS = {
   sat: 6
 };
 
-interface VIEWS {
-  day: string,
-  week: string,
-  month: string
-}
-
-export const VIEWS: VIEWS = {
+export const VIEWS: INTERFACE_VIEWS = {
   day: 'day',
   week: 'week',
   month: 'month'
 };
 
-interface VIEW_LABELS {
-  day: string,
-  week: string,
-  month: string
-}
-
-export const VIEW_LABELS: VIEW_LABELS = {
+export const VIEW_LABELS: INTERFACE_VIEW_LABELS = {
   day: 'Day',
   week: 'Week',
   month: 'Month'
 };
 
-export const INTERNAL_DATE: string = 'YYYY-MM-DD';
+export const INTERNAL_FORMAT: INTERFACE_INTERNAL_FORMAT = {
+  DATE: 'YYYY-MM-DD',
+  TIME: 'HH:mm:ss',
+  DATE_TIME: 'YYYY-MM-DD HH:mm:ss',
+};
+
+export const INTERNAL_DATE_TIME_REGEX = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;

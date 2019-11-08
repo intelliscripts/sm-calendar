@@ -7,14 +7,15 @@
 
 ## Properties
 
-| Property         | Attribute        | Description    | Type       | Default                                |
-| ---------------- | ---------------- | -------------- | ---------- | -------------------------------------- |
-| `availableViews` | --               | availableViews | `string[]` | `[VIEWS.day, VIEWS.week, VIEWS.month]` |
-| `contextDate`    | `context-date`   | contextDate    | `string`   | `moment().format(INTERNAL_DATE)`       |
-| `theme`          | `theme`          | Theme          | `string`   | `'teal'`                               |
-| `timezone`       | `timezone`       | timezone       | `string`   | `'GMT'`                                |
-| `view`           | `view`           | view           | `string`   | `VIEWS.week`                           |
-| `weekStartDay`   | `week-start-day` | weekStartDay   | `string`   | `'sun'`                                |
+| Property         | Attribute        | Description    | Type       | Default                                 |
+| ---------------- | ---------------- | -------------- | ---------- | --------------------------------------- |
+| `availableViews` | --               | availableViews | `string[]` | `[VIEWS.day, VIEWS.week, VIEWS.month]`  |
+| `contextDate`    | `context-date`   | contextDate    | `string`   | `moment().format(INTERNAL_FORMAT.DATE)` |
+| `events`         | --               | events         | `object[]` | `[]`                                    |
+| `theme`          | `theme`          | Theme          | `string`   | `'teal'`                                |
+| `timezone`       | `timezone`       | timezone       | `string`   | `'GMT'`                                 |
+| `view`           | `view`           | view           | `string`   | `VIEWS.week`                            |
+| `weekStartDay`   | `week-start-day` | weekStartDay   | `string`   | `'sun'`                                 |
 
 
 ## Dependencies

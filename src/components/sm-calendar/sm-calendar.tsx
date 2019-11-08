@@ -2,7 +2,8 @@ import {Component, Prop, h, Host, State, Watch} from '@stencil/core';
 import moment, {Moment} from 'moment';
 
 import calendar from './calendar/Calendar';
-import {INTERNAL_DATE, VIEWS} from "./calendar/constants";
+import {INTERNAL_FORMAT, VIEWS} from "./calendar/constants";
+import eventStore, {EventStore} from "./calendar/utils/events/EventStore";
 
 @Component({
   tag: 'sm-calendar',
@@ -24,7 +25,7 @@ export class SmCalendar {
   @Prop({
     reflect: true,
     mutable: true,
-  }) contextDate: string = moment().format(INTERNAL_DATE);
+  }) contextDate: string = moment().format(INTERNAL_FORMAT.DATE);
 
   /**
    * availableViews
@@ -58,13 +59,39 @@ export class SmCalendar {
     mutable: true,
   }) weekStartDay: string = 'sun';
 
-  @State() contextMoment: Moment = moment(this.contextDate, INTERNAL_DATE, this.timezone);
+  /**
+   * events
+   */
+  @Prop({
+    reflect: true,
+    mutable: true,
+  }) events: Array<object> = [];
 
+
+  /**
+   * state variables
+   */
+  @State() contextMoment: Moment = moment(this.contextDate, INTERNAL_FORMAT.DATE, this.timezone);
+  @State() eventStore: EventStore = eventStore;
+
+
+  /**
+   * life cycle methods
+   */
+
+  componentWillLoad() {
+    this.eventStore.parseEvents(this.events, this.timezone);
+  }
+
+  /**
+   * watchers
+   */
   @Watch('contextDate') handleContextDateChange() {
-    this.contextMoment = moment(this.contextDate, INTERNAL_DATE, this.timezone);
+    this.contextMoment = moment(this.contextDate, INTERNAL_FORMAT.DATE, this.timezone);
   }
 
   render() {
+    console.log(this.eventStore.getAll());
     return (
       <Host style={{'--theme-color': this.theme}} onClick={() => {}}>
         <div class='sm-calendar'>

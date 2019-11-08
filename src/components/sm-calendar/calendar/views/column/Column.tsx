@@ -1,6 +1,6 @@
 import {h} from "@stencil/core";
 import {calculateDateRange, getBetweenDates} from "./column-utils";
-import {INTERNAL_DATE, WEEK_DAYS} from "../../constants";
+import {INTERNAL_FORMAT, WEEK_DAYS} from "../../constants";
 import moment, {Moment} from "moment";
 
 export class Column {
@@ -13,11 +13,11 @@ export class Column {
 
 
   next(component) {
-    component.contextDate = component.contextMoment.clone().add(this.numberOfCols, 'day').format(INTERNAL_DATE);
+    component.contextDate = component.contextMoment.clone().add(this.numberOfCols, 'day').format(INTERNAL_FORMAT.DATE);
   }
 
   prev(component) {
-    component.contextDate = component.contextMoment.clone().add(0 - this.numberOfCols, 'day').format(INTERNAL_DATE);
+    component.contextDate = component.contextMoment.clone().add(0 - this.numberOfCols, 'day').format(INTERNAL_FORMAT.DATE);
   }
 
   constructor() {
@@ -142,7 +142,7 @@ export class Column {
       dayNames.push(<div class={dateCls.join(' ')}>
         <div class='day-name'>{date.format('dddd')}</div>
         <div class='day-date' onClick={() => {
-          component.contextDate = date.format(INTERNAL_DATE);
+          component.contextDate = date.format(INTERNAL_FORMAT.DATE);
         }}>
           {date.format('DD')}
         </div>

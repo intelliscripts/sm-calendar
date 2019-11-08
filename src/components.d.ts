@@ -20,6 +20,10 @@ export namespace Components {
     */
     'contextDate': string;
     /**
+    * events
+    */
+    'events': Array<object>;
+    /**
     * Theme
     */
     'theme': string;
@@ -69,6 +73,10 @@ declare namespace LocalJSX {
     * contextDate
     */
     'contextDate'?: string;
+    /**
+    * events
+    */
+    'events'?: Array<object>;
     /**
     * Theme
     */
