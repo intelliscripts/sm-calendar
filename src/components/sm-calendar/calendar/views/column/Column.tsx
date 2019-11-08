@@ -1,5 +1,5 @@
 import {h} from "@stencil/core";
-import {calculateDateRange, getBetweenDates} from "./column-utils";
+import {getBetweenDates} from "../../utils/common/date-utils";
 import {INTERNAL_FORMAT, WEEK_DAYS} from "../../constants";
 import moment, {Moment} from "moment";
 
@@ -11,6 +11,8 @@ export class Column {
   public timeStepFormat: string = 'HH:mm';
   public viewHeaderHeight: number = 70;
 
+  constructor() {
+  }
 
   next(component) {
     component.contextDate = component.contextMoment.clone().add(this.numberOfCols, 'day').format(INTERNAL_FORMAT.DATE);
@@ -20,7 +22,11 @@ export class Column {
     component.contextDate = component.contextMoment.clone().add(0 - this.numberOfCols, 'day').format(INTERNAL_FORMAT.DATE);
   }
 
-  constructor() {
+  public calculateViewRange(contextMoment: Moment, _weekStartDay: number) {
+    return {
+      startMoment: contextMoment.clone().startOf('day'),
+      endMoment: contextMoment.clone().endOf('day')
+    };
   }
 
   render(component) {
@@ -33,7 +39,7 @@ export class Column {
   }
 
   renderView(component) {
-    const range = calculateDateRange(component.contextMoment, this.numberOfCols, WEEK_DAYS[component.weekStartDay]);
+    const range = this.calculateViewRange(component.contextMoment, WEEK_DAYS[component.weekStartDay]);
     const viewDates: Array<Moment> = getBetweenDates(range.startMoment, range.endMoment);
     const stepMoments = this.getSteps();
 
@@ -158,6 +164,7 @@ export class Column {
       </div>
     );
   }
+
 }
 
 export default new Column();

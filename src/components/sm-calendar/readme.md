@@ -18,6 +18,13 @@
 | `weekStartDay`   | `week-start-day` | weekStartDay   | `string`   | `'sun'`                                 |
 
 
+## Events
+
+| Event        | Description | Type               |
+| ------------ | ----------- | ------------------ |
+| `viewChange` | Events      | `CustomEvent<any>` |
+
+
 ## Dependencies
 
 ### Used by

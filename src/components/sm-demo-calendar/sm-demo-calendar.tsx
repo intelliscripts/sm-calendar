@@ -14,7 +14,7 @@ export class SmDemoCalendar {
   render() {
     return (
       <div class='sm-demo-calendar'>
-        <sm-calendar events={this.events}/>
+        <sm-calendar events={this.events} onViewChange={(payload) => {console.log(payload)}}/>
       </div>
     );
   }

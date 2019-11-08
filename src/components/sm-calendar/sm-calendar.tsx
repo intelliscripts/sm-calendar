@@ -1,8 +1,8 @@
-import {Component, Prop, h, Host, State, Watch} from '@stencil/core';
+import {Component, Prop, h, Host, State, Watch, Event, EventEmitter} from '@stencil/core';
 import moment, {Moment} from 'moment';
 
 import calendar from './calendar/Calendar';
-import {INTERNAL_FORMAT, VIEWS} from "./calendar/constants";
+import {EVENTS, INTERNAL_FORMAT, VIEWS} from "./calendar/constants";
 import eventStore, {EventStore} from "./calendar/utils/events/EventStore";
 
 @Component({
@@ -90,8 +90,26 @@ export class SmCalendar {
     this.contextMoment = moment(this.contextDate, INTERNAL_FORMAT.DATE, this.timezone);
   }
 
+  @Watch('view') handleViewChange(view: string) {
+    this.viewChange.emit(view);
+  }
+
+  /**
+   * Events
+   */
+
+  @Event({
+    eventName: EVENTS.VIEW_CHANGE,
+    composed: true,
+    cancelable: true,
+    bubbles: true,
+  }) viewChange: EventEmitter;
+
+  /**
+   * main renderer
+   */
   render() {
-    console.log(this.eventStore.getAll());
+    console.log('rendered');
     return (
       <Host style={{'--theme-color': this.theme}} onClick={() => {}}>
         <div class='sm-calendar'>
