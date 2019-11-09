@@ -3,6 +3,7 @@ import header from './header/Header';
 import dayView from './views/day/Day';
 import weekView from './views/week/Week';
 import {VIEWS} from "./constants";
+import {getMomentsInBetween} from "./utils/common/date-utils";
 
 class Calendar {
 
@@ -14,10 +15,13 @@ class Calendar {
   }
 
   render(component) {
-    const viewRenderer = this.getViewRenderer(component);
+    component.viewRenderer = this.getViewRenderer(component);
 
-    component.viewRenderer = viewRenderer;
-    component.eventsInViewRange = viewRenderer.getEventsInViewRange(component);
+    const {startMoment, endMoment} = component;
+    component.viewRange = {
+      events: component.viewRenderer.getEventsInViewRange(component),
+      dates: getMomentsInBetween(startMoment, endMoment)
+    };
 
     return (
       <div class='sm-calendar-container' style={{'--header-height': '50px'}}>

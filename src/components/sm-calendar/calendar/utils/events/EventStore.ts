@@ -1,4 +1,5 @@
 import CalendarEvent from "./CalendarEvent";
+import {Moment} from "moment-timezone";
 
 export class EventStore {
   private events: Array<CalendarEvent> = [];
@@ -9,10 +10,6 @@ export class EventStore {
 
   flush() {
     this.events = [];
-  }
-
-  getAll(): Array<CalendarEvent> {
-    return this.events;
   }
 
   /**
@@ -28,14 +25,21 @@ export class EventStore {
 
   /**
    *
-   * @param startMS
-   * @param endMS
+   * @param startMoment
+   * @param endMoment
    */
-  getEventsBetween(startMS: number, endMS: number) {
-    return this.getAll().filter((e) => {
-      return !(e.startMS > endMS || e.endMS < startMS || e.endMS === startMS);
+  getEventsBetween(startMoment: Moment, endMoment: Moment): Array<CalendarEvent> {
+    const events: Array<CalendarEvent> = [];
+
+    this.events.forEach((event) => {
+      if (!(event.startMoment.valueOf() > endMoment.valueOf() || event.endMoment.valueOf() < startMoment.valueOf() || event.endMoment.valueOf() === startMoment.valueOf())) {
+        events.push(event.clone());
+      }
     });
+
+    return events;
   }
+
 }
 
 export default new EventStore();

@@ -1,8 +1,8 @@
 import {h} from "@stencil/core";
-import {getBetweenDates} from "../../utils/common/date-utils";
 import {INTERNAL_FORMAT} from "../../constants";
-import moment, {Moment} from "moment";
+import moment, {Moment} from 'moment-timezone';
 import {View} from "../view/View";
+import CalendarEvent from "../../utils/events/CalendarEvent";
 
 export class Column extends View{
   public numberOfCols: number;
@@ -32,6 +32,8 @@ export class Column extends View{
   }
 
   render(component) {
+    component.stepMoments = this.getSteps();
+
     const cls: Array<string> = ['view-container', component.view];
     return (
       <div class={cls.join(' ')}>
@@ -41,34 +43,82 @@ export class Column extends View{
   }
 
   renderView(component) {
-    const {startMoment, endMoment} = component;
-
-    const viewDates: Array<Moment> = getBetweenDates(startMoment, endMoment);
-    const stepMoments = this.getSteps();
-
     const cls: Array<string> = ['view-wrapper'];
+
     return (
       <div class={cls.join(' ')} style={{'--left-scale-width': this.leftScaleWidth + 'px', '--time-step-height': this.timeStepHeight + 'px', '--view-header-height': this.viewHeaderHeight + 'px'}}>
-        {this.renderViewHeader(component, viewDates)}
-        {this.renderViewBody(component, viewDates, stepMoments)}
+        {this.renderViewHeader(component)}
+        {this.renderViewBody(component)}
       </div>
     );
   }
 
-  renderViewBody(component, viewDates: Array<Moment>, stepMoments: Array<Moment>) {
+  renderViewBody(component) {
     const cls: Array<string> = ['view-body'];
 
     return (
       <div class={cls.join(' ')}>
         <div class='view-body-relative'>
-          {this.renderLeftScale(component, stepMoments)}
-          {this.renderGrid(component, viewDates, stepMoments)}
+          {this.renderLeftScale(component)}
+          {this.renderDrawingArea(component)}
         </div>
       </div>
     );
   }
 
-  renderGrid(_component, viewDates: Array<Moment>, stepMoments: Array<Moment>) {
+  renderDrawingArea(component) {
+    return (
+      <div class='drawing-area-container'>
+        <div class='drawing-area-container-relative'>
+          {this.renderGrid(component)}
+          {this.renderEvents(component)}
+        </div>
+      </div>
+    );
+  }
+
+  renderEvents(component) {
+   // console.log(component.viewRange.events);
+    component.viewRange.events.forEach((test) => console.log(test.startMoment.format('YYYY-MM-DD HH:mm:ss')));
+    component.viewRange.events.forEach((test) => console.log(test.endMoment.format('YYYY-MM-DD HH:mm:ss')));
+    return (
+      <div class='events-wrapper'>
+      </div>
+    );
+  }
+
+  public processEventsInViewRange(component, events: Array<CalendarEvent>): Array<CalendarEvent> {
+    this.chopEvents(component, events);
+    this.chunkEvents(component, events);
+    return events;
+  }
+
+  chunkEvents(_component, _events: Array<CalendarEvent>) {
+
+  }
+
+  chopEvents(component, events: Array<CalendarEvent>) {
+    events.forEach((event) => {
+      if (event.startMoment.isBefore(component.startMoment)) {
+        event.startMoment = component.startMoment.clone();
+      }
+      if (event.endMoment.isAfter(component.endMoment)) {
+        event.endMoment = component.endMoment.clone();
+      }
+    });
+  }
+
+  renderGrid(component) {
+    return (
+      <div class='grid-wrapper'>
+        {this.renderGridRows(component)}
+      </div>
+    );
+  }
+
+  renderGridRows(component) {
+    const viewDates: Array<Moment> = component.viewRange.dates;
+    const stepMoments: Array<Moment> = component.stepMoments;
 
     const rows = [];
 
@@ -87,16 +137,7 @@ export class Column extends View{
         {cols}
       </div>);
     });
-
-    return (
-      <div class='grid-container'>
-        <div class='grid-container-relative'>
-          <div class='grid-wrapper'>
-            {rows}
-          </div>
-        </div>
-      </div>
-    );
+    return rows;
   }
 
   getSteps(): Array<Moment> {
@@ -113,8 +154,9 @@ export class Column extends View{
     return stepMoments;
   }
 
-  renderLeftScale(_component, stepMoments: Array<Moment>) {
+  renderLeftScale(component) {
     const steps = [];
+    const stepMoments = component.stepMoments;
 
     stepMoments.forEach((stepMoment, index) => {
       steps.push(<div class='step' style={{height: this.timeStepHeight + 1 + 'px'}}>
@@ -131,7 +173,9 @@ export class Column extends View{
     );
   }
 
-  renderViewHeader(component, viewDates: Array<Moment>) {
+  renderViewHeader(component) {
+    const viewDates: Array<Moment> = component.viewRange.dates;
+
     const cls: Array<string> = ['view-header'];
     const {contextMoment} =component;
 

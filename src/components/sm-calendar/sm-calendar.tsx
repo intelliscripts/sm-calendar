@@ -130,7 +130,6 @@ export class SmCalendar {
    * main renderer
    */
   render() {
-    console.log('rendered');
     return (
       <Host style={{'--theme-color': this.theme}} onClick={() => {}}>
         <div class='sm-calendar'>

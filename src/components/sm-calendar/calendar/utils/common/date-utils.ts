@@ -1,6 +1,6 @@
 import {Moment} from 'moment';
 
-export function getBetweenDates(startDateMoment: Moment, endDateMoment: Moment): Array<Moment> {
+export function getMomentsInBetween(startDateMoment: Moment, endDateMoment: Moment): Array<Moment> {
   const dates: Array<Moment> = [];
   const startDateMomentClone: Moment = startDateMoment.clone();
   while(startDateMomentClone.valueOf() < endDateMoment.valueOf()) {

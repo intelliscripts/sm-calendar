@@ -1,6 +1,5 @@
 import {INTERNAL_DATE_TIME_REGEX, INTERNAL_FORMAT} from "../../constants";
-import moment from 'moment-timezone';
-import {Moment} from "moment";
+import moment,{Moment} from 'moment-timezone';
 
 class CalendarEvent {
 
@@ -11,9 +10,9 @@ class CalendarEvent {
   end: string;
   text_color: string;
   bg_color: string;
-  startMS: number;
+
+  timezone: string;
   startMoment: Moment;
-  endMS: number;
   endMoment: Moment;
   rawEvent: object;
 
@@ -30,17 +29,19 @@ class CalendarEvent {
     this.end = rawEvent.end;
     this.text_color = rawEvent.text_color;
     this.bg_color = rawEvent.bg_color;
+    this.timezone = timezone;
     this.rawEvent = rawEvent;
 
     if(INTERNAL_DATE_TIME_REGEX.test(this.start)) {
-      this.startMS = moment.tz(rawEvent.start, INTERNAL_FORMAT.DATE_TIME, true, timezone).valueOf();
-      this.startMoment = moment.utc(this.startMS).tz(timezone);
-
+      this.startMoment = moment.tz(rawEvent.start, INTERNAL_FORMAT.DATE_TIME, true, timezone);
     }
     if(INTERNAL_DATE_TIME_REGEX.test(this.end)) {
-      this.endMS = moment.tz(rawEvent.end, INTERNAL_FORMAT.DATE_TIME, true, timezone).valueOf();
-      this.endMoment = moment.utc(this.endMS).tz(timezone);
+      this.endMoment = moment.tz(rawEvent.end, INTERNAL_FORMAT.DATE_TIME, true, timezone);
     }
+  }
+
+  clone(): CalendarEvent {
+    return new CalendarEvent(this.rawEvent, this.timezone);
   }
 
   /**

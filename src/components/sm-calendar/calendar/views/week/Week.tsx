@@ -19,6 +19,7 @@ class Week extends Column {
     const endMoment: Moment = moment(startMoment).add(this.numberOfCols - 1, 'days').endOf('day');
     return {startMoment, endMoment};
   }
+
 }
 
 export default new Week();

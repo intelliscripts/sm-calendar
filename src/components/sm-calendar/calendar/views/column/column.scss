@@ -68,12 +68,12 @@
               }
             }
           }
-          .grid-container {
+          .drawing-area-container {
             width: calc(100% - var(--left-scale-width));
             position: absolute;
             top: 0;
             left: calc(var(--left-scale-width));
-            .grid-container-relative {
+            .drawing-area-container-relative {
               position: relative;
               .grid-wrapper {
                 .row {
