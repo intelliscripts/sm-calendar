@@ -11,6 +11,8 @@ class CalendarEvent {
   text_color: string;
   bg_color: string;
 
+  isMultiDay: boolean = false;
+  chunks: Array<object> = [];
   timezone: string;
   startMoment: Moment;
   endMoment: Moment;
@@ -37,6 +39,9 @@ class CalendarEvent {
     }
     if(INTERNAL_DATE_TIME_REGEX.test(this.end)) {
       this.endMoment = moment.tz(rawEvent.end, INTERNAL_FORMAT.DATE_TIME, true, timezone);
+    }
+    if (!this.startMoment.isSame(this.endMoment, 'day')){
+      this.isMultiDay = true;
     }
   }
 

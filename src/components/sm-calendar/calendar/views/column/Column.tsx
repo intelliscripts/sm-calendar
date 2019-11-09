@@ -78,14 +78,21 @@ export class Column extends View{
   }
 
   renderEvents(component) {
-   // console.log(component.viewRange.events);
-    component.viewRange.events.forEach((test) => console.log(test.startMoment.format('YYYY-MM-DD HH:mm:ss')));
-    component.viewRange.events.forEach((test) => console.log(test.endMoment.format('YYYY-MM-DD HH:mm:ss')));
+
+    component.viewRange.events.forEach((event) => {
+      event.chunks.forEach((chunk) => {
+        console.log(chunk.startMoment.format(INTERNAL_FORMAT.DATE_TIME));
+        console.log(chunk.endMoment.format(INTERNAL_FORMAT.DATE_TIME));
+        console.log('*****************************************');
+      });
+    });
+    
     return (
       <div class='events-wrapper'>
       </div>
     );
   }
+
 
   public processEventsInViewRange(component, events: Array<CalendarEvent>): Array<CalendarEvent> {
     this.chopEvents(component, events);
@@ -93,8 +100,32 @@ export class Column extends View{
     return events;
   }
 
-  chunkEvents(_component, _events: Array<CalendarEvent>) {
+  chunkEvents(_component, events: Array<CalendarEvent>) {
+    events.forEach((event) => {
+      if (event.isMultiDay) {
+        const startMoment: Moment = event.startMoment.clone();
 
+        while (!startMoment.isSame(event.endMoment, 'day')) {
+          const chunk: object = {
+            startMoment: startMoment.clone(),
+            endMoment: startMoment.clone().endOf('day')
+          };
+          event.chunks.push(chunk);
+          startMoment.endOf('day').add(1, 'second');
+        }
+
+        event.chunks.push({
+          startMoment: startMoment.clone(),
+          endMoment: event.endMoment.clone()
+        });
+      }
+      else {
+        event.chunks.push({
+          startMoment: event.startMoment.clone(),
+          endMoment: event.endMoment.clone()
+        });
+      }
+    });
   }
 
   chopEvents(component, events: Array<CalendarEvent>) {
@@ -104,6 +135,9 @@ export class Column extends View{
       }
       if (event.endMoment.isAfter(component.endMoment)) {
         event.endMoment = component.endMoment.clone();
+      }
+      if (!event.startMoment.isSame(event.endMoment, 'day')){
+        event.isMultiDay = true;
       }
     });
   }
