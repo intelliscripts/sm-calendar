@@ -3,6 +3,8 @@
 
 @import "custom-styles";
 @import "../calendar/header/header";
+
+@import "../calendar/views/view/view";
 @import "../calendar/views/column/column";
 
 :host {

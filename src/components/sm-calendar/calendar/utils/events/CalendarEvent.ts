@@ -10,6 +10,7 @@ class CalendarEvent {
   end: string;
   text_color: string;
   bg_color: string;
+  border_color: string;
 
   isMultiDay: boolean = false;
   chunks: Array<object> = [];
@@ -32,6 +33,7 @@ class CalendarEvent {
     this.end = rawEvent.end;
     this.text_color = rawEvent.text_color;
     this.bg_color = rawEvent.bg_color;
+    this.border_color = rawEvent.border_color;
     this.timezone = timezone;
     this.rawEvent = rawEvent;
 

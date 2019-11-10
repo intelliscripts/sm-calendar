@@ -1,5 +1,6 @@
 import {Column} from "../column/Column";
 import {Moment} from "moment";
+import templateRenderer, {DayTemplateRenderer} from "./DayTemplateRenderer";
 
 class Day extends Column {
   constructor() {
@@ -7,6 +8,7 @@ class Day extends Column {
   }
 
   public numberOfCols: number = 1;
+  public templateRenderer: DayTemplateRenderer = templateRenderer;
 
   public calculateViewRange(contextMoment: Moment, _weekStartDay: number) {
     const startMoment: Moment = contextMoment.clone().startOf('day');

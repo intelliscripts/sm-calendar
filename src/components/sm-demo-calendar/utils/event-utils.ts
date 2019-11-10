@@ -3,14 +3,15 @@ import moment, {Moment} from 'moment-timezone';
 const INTERNAL_DATE: string = 'YYYY-MM-DD';
 export const CONTEXT_DATE: string = '2019-11-06';
 
-function getEvent(title: string, description: string, start: string, end: string, text_color: string = '#fff', bg_color: string = 'teal') {
+function getEvent(title: string, description: string, start: string, end: string, text_color: string = '#000', bg_color: string = '', border_color: string = '') {
   return{
     start,
     end,
     bg_color,
     description,
     text_color,
-    title
+    title,
+    border_color
   };
 }
 

@@ -88,7 +88,17 @@
               .events-wrapper {
                 .event {
                   position: absolute;
-                  opacity: 0.5;
+                  .event-container {
+                    padding: 5px;
+                    .event-title {
+                      font-size: 12px;
+                      font-weight: 600;
+                      margin-bottom: 10px;
+                    }
+                    .event-description {
+                      font-size: 13px;
+                    }
+                  }
                 }
               }
             }

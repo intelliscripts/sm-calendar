@@ -4,6 +4,7 @@ import moment, {Moment} from 'moment-timezone';
 import {View} from "../view/View";
 import CalendarEvent from "../../utils/events/CalendarEvent";
 import {getBestFitPosition, getOverlaps} from './column-utils';
+import templateRenderer, {ColumnTemplateRenderer} from './ColumnTemplateRenderer';
 
 export class Column extends View{
   public numberOfCols: number = 1;
@@ -12,6 +13,8 @@ export class Column extends View{
   public timeStepHeight: number = 40;
   public timeStepFormat: string = 'HH:mm';
   public viewHeaderHeight: number = 70;
+  public scaleSizeInSecs: number = 24 * 60 * 60;
+  public templateRenderer: ColumnTemplateRenderer = templateRenderer;
 
   constructor() {
     super();
@@ -122,18 +125,25 @@ export class Column extends View{
     return events;
   }
 
-  getEvent(event) {
+  getEvent(event: CalendarEvent) {
+    const eventStyles: object = {
+      ...event.style,
+      background: event.bg_color,
+      color: event.text_color,
+      ['border-color']: event.border_color
+    };
+
     return (
-      <div class='event' style={{...event.style, background: event.bg_color, color: event.text_color}}>
-        {event.title}
+      <div class='event' style={{...eventStyles}}>
+        {this.templateRenderer.eventContainer(event)}
       </div>
     );
   }
+
   processStyleAttributes(_component, bestFit, column) {
     let events = bestFit.events;
 
     const {numberOfCols} = this;
-    const scaleSizeInSecs = 86400;
 
     const layout = this.getPaddings();
     let totalWidth = (100 / numberOfCols) - layout.startPadding - layout.endPadding;
@@ -143,8 +153,8 @@ export class Column extends View{
       let startSecs = events[i].startSec;
       let endSecs = events[i].endSec;
 
-      const eventTop = startSecs / scaleSizeInSecs * 100;
-      let eventHeight =(endSecs - startSecs) / scaleSizeInSecs * 100;
+      const eventTop = startSecs / this.scaleSizeInSecs * 100;
+      let eventHeight =(endSecs - startSecs) / this.scaleSizeInSecs * 100;
 
       const totalPosition = eventTop + eventHeight;
 

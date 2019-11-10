@@ -26,6 +26,7 @@ export const INTERNAL_FORMAT: INTERFACE_INTERNAL_FORMAT = {
   DATE: 'YYYY-MM-DD',
   TIME: 'HH:mm:ss',
   DATE_TIME: 'YYYY-MM-DD HH:mm:ss',
+  DISPLAY_TIME: 'HH:mm'
 };
 
 export const INTERNAL_DATE_TIME_REGEX = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
