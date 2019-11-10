@@ -17,6 +17,7 @@ class CalendarEvent {
   startMoment: Moment;
   endMoment: Moment;
   rawEvent: object;
+  style: object;
 
   /**
    *

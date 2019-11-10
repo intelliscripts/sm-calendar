@@ -85,6 +85,12 @@
                   }
                 }
               }
+              .events-wrapper {
+                .event {
+                  position: absolute;
+                  opacity: 0.5;
+                }
+              }
             }
           }
         }

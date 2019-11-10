@@ -3,9 +3,10 @@ import {INTERNAL_FORMAT} from "../../constants";
 import moment, {Moment} from 'moment-timezone';
 import {View} from "../view/View";
 import CalendarEvent from "../../utils/events/CalendarEvent";
+import {getBestFitPosition, getOverlaps} from './column-utils';
 
 export class Column extends View{
-  public numberOfCols: number;
+  public numberOfCols: number = 1;
   public leftScaleWidth: number = 100;
   public timeStepDuration: number = 60;//minutes
   public timeStepHeight: number = 40;
@@ -78,54 +79,148 @@ export class Column extends View{
   }
 
   renderEvents(component) {
+    const events = [];
 
-    component.viewRange.events.forEach((event) => {
-      event.chunks.forEach((chunk) => {
-        console.log(chunk.startMoment.format(INTERNAL_FORMAT.DATE_TIME));
-        console.log(chunk.endMoment.format(INTERNAL_FORMAT.DATE_TIME));
-        console.log('*****************************************');
-      });
+    this.getEvents(component).forEach((event) => {
+      events.push(this.getEvent(event));
     });
-    
+
     return (
       <div class='events-wrapper'>
+        {events}
       </div>
     );
   }
 
+  getEvents(component) {
+    const events = [];
 
-  public processEventsInViewRange(component, events: Array<CalendarEvent>): Array<CalendarEvent> {
-    this.chopEvents(component, events);
-    this.chunkEvents(component, events);
+    const MAX_EVENTS_OVERLAP : number=  Math.trunc(200 / this.numberOfCols);
+    const eventsColumnMap: object = this.getEventsColumnMap(component, component.viewRange.events);
+
+    for (let column in eventsColumnMap) {
+      const columnEvents = eventsColumnMap[column];
+      const overlaps = getOverlaps(columnEvents, null, component.timezone);
+
+      for (const o in overlaps) {
+        const overlapEvents = overlaps[o];
+        if (!overlapEvents || overlapEvents.length === 0)
+          continue;
+
+        let bestFit = getBestFitPosition(overlapEvents, true);
+
+        if (bestFit.divisor > MAX_EVENTS_OVERLAP) {
+          bestFit.divisor = MAX_EVENTS_OVERLAP;
+          bestFit.events = bestFit.events.filter(function(event){
+            return event.startPosition < MAX_EVENTS_OVERLAP && event.endPosition <= MAX_EVENTS_OVERLAP;
+          });
+        }
+        events.push(...this.processStyleAttributes(component, bestFit, column));
+      }
+    }
+
     return events;
   }
 
+  getEvent(event) {
+    return (
+      <div class='event' style={{...event.style, background: event.bg_color, color: event.text_color}}>
+        {event.title}
+      </div>
+    );
+  }
+  processStyleAttributes(_component, bestFit, column) {
+    let events = bestFit.events;
+
+    const {numberOfCols} = this;
+    const scaleSizeInSecs = 86400;
+
+    const layout = this.getPaddings();
+    let totalWidth = (100 / numberOfCols) - layout.startPadding - layout.endPadding;
+    let origStart = (100 / numberOfCols) * column + layout.startPadding;
+    let eventWidth = (totalWidth / bestFit.divisor);
+    for (let i = 0; i < events.length; i++) {
+      let startSecs = events[i].startSec;
+      let endSecs = events[i].endSec;
+
+      const eventTop = startSecs / scaleSizeInSecs * 100;
+      let eventHeight =(endSecs - startSecs) / scaleSizeInSecs * 100;
+
+      const totalPosition = eventTop + eventHeight;
+
+      if (totalPosition > 100) {
+        eventHeight = 100 - eventTop;
+      }
+
+      events[i].style = {
+        width: (eventWidth > layout.spacing ? (eventWidth * (events[i].endPosition - events[i].startPosition + 1) - layout.spacing) : eventWidth) + '%',
+        left: (origStart + eventWidth * events[i].startPosition) + '%',
+        top: eventTop + '%',
+        height: eventHeight + '%',
+      };
+    }
+    return events;
+  }
+
+  getPaddings() {
+    /** All values are in % */
+    return {
+      startPadding: 0.2,
+      endPadding: 1,
+      spacing: 0.2,
+    };
+  }
+
+  getEventsColumnMap(component, events: Array<CalendarEvent>): object {
+    const eventsColumnMap = {};
+
+    events.forEach((event) => {
+      const key = event.startMoment.diff(component.startMoment, 'days');
+      if (!eventsColumnMap[key]) {
+        eventsColumnMap[key] = [];
+      }
+      eventsColumnMap[key].push(event);
+    });
+
+    return eventsColumnMap;
+  }
+
+  public processEventsInViewRange(component, events: Array<CalendarEvent>): Array<CalendarEvent> {
+    let processedEvents: Array<CalendarEvent>;
+    this.chopEvents(component, events);
+    processedEvents = this.chunkEvents(component, events);
+    return processedEvents;
+  }
+
   chunkEvents(_component, events: Array<CalendarEvent>) {
+    const chunkEvents: Array<CalendarEvent> = [];
+
     events.forEach((event) => {
       if (event.isMultiDay) {
         const startMoment: Moment = event.startMoment.clone();
 
         while (!startMoment.isSame(event.endMoment, 'day')) {
-          const chunk: object = {
-            startMoment: startMoment.clone(),
-            endMoment: startMoment.clone().endOf('day')
-          };
-          event.chunks.push(chunk);
+          const chunkEvent = event.clone();
+
+          chunkEvent.startMoment = startMoment.clone();
+          chunkEvent.endMoment = startMoment.clone().endOf('day');
+          chunkEvents.push(chunkEvent);
+
           startMoment.endOf('day').add(1, 'second');
         }
 
-        event.chunks.push({
-          startMoment: startMoment.clone(),
-          endMoment: event.endMoment.clone()
-        });
+        const chunkEvent = event.clone();
+        chunkEvent.startMoment = startMoment.clone();
+        chunkEvent.endMoment = event.endMoment.clone();
+
+        chunkEvents.push(chunkEvent);
       }
       else {
-        event.chunks.push({
-          startMoment: event.startMoment.clone(),
-          endMoment: event.endMoment.clone()
-        });
+        chunkEvents.push(event.clone());
       }
     });
+
+    return chunkEvents;
   }
 
   chopEvents(component, events: Array<CalendarEvent>) {
