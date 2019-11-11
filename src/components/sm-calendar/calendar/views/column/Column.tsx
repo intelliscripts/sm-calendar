@@ -12,7 +12,7 @@ export class Column extends View{
   public timeStepDuration: number = 60;//minutes
   public timeStepHeight: number = 40;
   public timeStepFormat: string = 'HH:mm';
-  public viewHeaderHeight: number = 70;
+  public viewHeaderHeight: number = 50;
   public scaleSizeInSecs: number = 24 * 60 * 60;
   public templateRenderer: ColumnTemplateRenderer = templateRenderer;
 
@@ -321,22 +321,24 @@ export class Column extends View{
     const dayNames = [];
 
     viewDates.forEach((date) => {
-      const dateCls: Array<string> = ['item'];
+      const headerColumnCls: Array<string> = ['view-header-column'];
 
       if (date.isSame(moment(), 'day')) {
-        dateCls.push('today');
+        headerColumnCls.push('today');
       }
 
       if (date.isSame(contextMoment, 'day')) {
-        dateCls.push('selected');
+        headerColumnCls.push('selected');
       }
 
-      dayNames.push(<div class={dateCls.join(' ')}>
-        <div class='day-name'>{date.format('dddd')}</div>
-        <div class='day-date' onClick={() => {
-          component.contextDate = date.format(INTERNAL_FORMAT.DATE);
-        }}>
-          {date.format('DD')}
+      dayNames.push(<div class='item'>
+        <div class={headerColumnCls.join(' ')}>
+          <div class='day-date' onClick={() => {
+            component.contextDate = date.format(INTERNAL_FORMAT.DATE);
+          }}>
+            {date.format('DD')}
+          </div>
+          <div class='day-name'>{date.format('dddd')}</div>
         </div>
       </div>);
     });

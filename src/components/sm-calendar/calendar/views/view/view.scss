@@ -2,5 +2,10 @@
   .event {
     background: $event-background;
     border: 1px solid $event-border;
+    word-wrap: break-word;
+    box-sizing: border-box;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

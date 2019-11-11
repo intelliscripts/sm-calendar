@@ -4,6 +4,7 @@
       .view-header {
         border-bottom: 1px solid $border-color;
         height: var(--view-header-height);
+        overflow-y: scroll;
         .row {
           display: flex;
           .empty-left-scale {
@@ -12,102 +13,107 @@
           .item {
             flex: 1;
             text-align: center;
-            padding: 10px 0px 6px 0px;
             font-weight: 300;
-            border-left: 1px solid $border-color;
-            .day-date {
-              width: 20px;
-              height: 20px;
-              text-align: center;
-              margin: 0px auto;
-              vertical-align: middle;
-              margin-top: 5px;
-              padding: 5px;
-              border-radius: 50%;
-              &:hover {
-                cursor: pointer;
-                background: var(--theme-color);
-                color: $color-white;
-                opacity: 0.4;
+            .view-header-column {
+              border-left: 1px solid $border-color;
+              height: var(--view-header-height);
+              .day-name {
+                display: inline-block;
+                font-size: 15px;
               }
-            }
-            &.selected {
               .day-date {
-                background: var(--theme-color);
-                border:1px solid var(--theme-color);
-                color: $color-white;
+                display: inline-block;
+                width: 18px;
+                height: 18px;
+                text-align: center;
+                padding: 5px;
+                border-radius: 50%;
+                font-weight: 600;
+                margin-top: 12px;
+                margin-right: 10px;
                 &:hover {
-                  opacity: 1;
+                  cursor: pointer;
+                  background: var(--theme-color);
+                  color: $color-white;
+                  opacity: 0.4;
+                }
+              }
+              &.selected {
+                .day-date {
+                  background: var(--theme-color);
+                  border:1px solid var(--theme-color);
+                  color: $color-white;
+                  &:hover {
+                    opacity: 1;
+                  }
+                }
+              }
+              &.today {
+                .day-date {
+                  border:1px solid var(--theme-color);
                 }
               }
             }
-            &.today {
-              .day-date {
-                border:1px solid var(--theme-color);
-              }
+      }
+    }
+  }
+  .view-body {
+    .view-body-relative {
+      position: relative;
+      overflow: auto;
+      height: calc(100vh - var(--header-height) - var(--view-header-height) - 10px);
+      .left-scale {
+        width: var(--left-scale-width);
+        .step-container {
+          .step {
+            position: relative;
+            font-size: 15px;
+            &:after {
+              content: " ";
+              position: absolute;
+              top: -1.5px;
+              width: 15px;
+              background: $border-color;
+              height: 1px;
+              right: 0px;
+            }
+            .step-time {
+              position: absolute;
+              right: 20px;
+              top: -9px;
             }
           }
         }
       }
-      .view-body {
-        .view-body-relative {
+      .drawing-area-container {
+        width: calc(100% - var(--left-scale-width));
+        position: absolute;
+        top: 0;
+        left: calc(var(--left-scale-width));
+        .drawing-area-container-relative {
           position: relative;
-          overflow: auto;
-          height: calc(100vh - var(--header-height) - var(--view-header-height) - 10px);
-          .left-scale {
-            width: var(--left-scale-width);
-            .step-container {
-              .step {
-                position: relative;
-                font-size: 15px;
-                &:after {
-                  content: " ";
-                  position: absolute;
-                  top: -1.5px;
-                  width: 15px;
-                  background: $border-color;
-                  height: 1px;
-                  right: 0px;
-                }
-                .step-time {
-                  position: absolute;
-                  right: 20px;
-                  top: -9px;
-                }
+          .grid-wrapper {
+            .row {
+              display: flex;
+              border-bottom: 1px solid $border-color;
+              .item {
+                flex: 1;
+                border-left: 1px solid $border-color;
               }
             }
           }
-          .drawing-area-container {
-            width: calc(100% - var(--left-scale-width));
-            position: absolute;
-            top: 0;
-            left: calc(var(--left-scale-width));
-            .drawing-area-container-relative {
-              position: relative;
-              .grid-wrapper {
-                .row {
-                  display: flex;
-                  border-bottom: 1px solid $border-color;
-                  .item {
-                    flex: 1;
-                    border-left: 1px solid $border-color;
-                  }
+          .events-wrapper {
+            .event {
+              position: absolute;
+              .event-container {
+                padding: 5px;
+                .event-title {
+                  font-size: 12px;
+                  font-weight: 600;
+                  margin-bottom: 10px;
                 }
-              }
-              .events-wrapper {
-                .event {
-                  position: absolute;
-                  .event-container {
-                    padding: 5px;
-                    .event-title {
-                      font-size: 12px;
-                      font-weight: 600;
-                      margin-bottom: 10px;
-                    }
-                    .event-description {
-                      font-size: 13px;
-                    }
-                  }
+                .event-description {
+                  font-size: 13px;
                 }
               }
             }
@@ -116,4 +122,6 @@
       }
     }
   }
+}
+}
 }

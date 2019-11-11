@@ -17,7 +17,7 @@ export class SmCalendar {
   @Prop({
     reflect: true,
     mutable: true,
-  }) theme: string = 'teal';
+  }) theme: string = 'teal';//lightseagreen
 
   /**
    * contextDate
