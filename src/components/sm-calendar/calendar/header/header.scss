@@ -7,6 +7,11 @@
     display: flex;
     .header-section {
       flex: 1;
+      .view-range {
+        text-align: center;
+        font-size: 17px;
+        padding-top: 14px;
+      }
       .view-navigation {
         margin-top: 7px;
         margin-left: 100px;

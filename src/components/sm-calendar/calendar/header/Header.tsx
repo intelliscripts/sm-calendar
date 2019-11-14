@@ -11,13 +11,19 @@ class Header {
             {this.renderViewNavigation(component)}
           </div>
           <div class='header-section'>
-
+            {this.renderViewRange(component)}
           </div>
           <div class='header-section'>
             {this.renderViewButton(component)}
           </div>
         </div>
     );
+  }
+
+  renderViewRange(component) {
+    return (<div class='view-range'>
+      {component.viewRenderer.getHeaderText(component)}
+    </div>);
   }
 
   renderViewNavigation(component) {

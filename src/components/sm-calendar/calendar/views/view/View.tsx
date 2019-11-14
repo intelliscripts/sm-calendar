@@ -26,4 +26,10 @@ export class View {
   public renderView(_component: any) {
 
   }
+
+  public getHeaderText(component) {
+    return(<div>
+      {component.startMoment.format('DD MMM, YYYY')} - {component.endMoment.format('DD MMM, YYYY')}
+    </div>);
+  }
 }

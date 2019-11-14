@@ -247,7 +247,7 @@ export class Column extends View{
   }
 
   renderGridRows(component) {
-    const viewDates: Array<Moment> = component.viewRange.dates;
+    const gridDates: Array<Moment> = component.viewRange.dates;
     const stepMoments: Array<Moment> = component.stepMoments;
 
     const rows = [];
@@ -255,7 +255,7 @@ export class Column extends View{
     stepMoments.forEach((_stepMoment, index) => {
       const cols = [];
 
-      viewDates.forEach((viewDate) => {
+      gridDates.forEach((viewDate) => {
         const timeMoment = viewDate.clone().add(this.timeStepDuration * index, 'minutes');
         cols.push(<div class='item' style={{height: this.timeStepHeight + 'px'}} data-time={timeMoment.format('HH:ss')}>
 
@@ -304,14 +304,14 @@ export class Column extends View{
   }
 
   renderViewHeader(component) {
-    const viewDates: Array<Moment> = component.viewRange.dates;
+    const gridHeaderDates: Array<Moment> = component.viewRange.dates;
 
     const cls: Array<string> = ['view-header'];
     const {contextMoment} =component;
 
     const dayNames = [];
 
-    viewDates.forEach((date) => {
+    gridHeaderDates.forEach((date) => {
       const headerColumnCls: Array<string> = ['view-header-column'];
 
       if (date.isSame(moment(), 'day')) {
@@ -319,7 +319,7 @@ export class Column extends View{
       }
 
       if (date.isSame(contextMoment, 'day')) {
-        headerColumnCls.push('selected');
+        headerColumnCls.push('context-date');
       }
 
       dayNames.push(<div class='item'>
