@@ -2,6 +2,7 @@ import {h} from "@stencil/core";
 import header from './header/Header';
 import dayView from './views/day/Day';
 import weekView from './views/week/Week';
+import monthView from './views/month/Month';
 import {VIEWS} from "./constants";
 import {getMomentsInBetween} from "./utils/common/date-utils";
 
@@ -12,6 +13,8 @@ class Calendar {
       return dayView;
     else if (component.view === VIEWS.week)
       return weekView;
+    else if (component.view === VIEWS.month)
+      return monthView;
   }
 
   render(component) {

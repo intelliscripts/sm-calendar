@@ -35,18 +35,9 @@ export class Column extends View{
     };
   }
 
-  render(component) {
+  renderView(component) {
     component.stepMoments = this.getSteps();
 
-    const cls: Array<string> = ['view-container', component.view];
-    return (
-      <div class={cls.join(' ')}>
-        {this.renderView(component)}
-      </div>
-    );
-  }
-
-  renderView(component) {
     const cls: Array<string> = ['view-wrapper'];
 
     return (

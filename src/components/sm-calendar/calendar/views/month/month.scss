@@ -1,0 +1,27 @@
+.view-container{
+  &.month {
+    .view-wrapper {
+      .view-header {
+        border-bottom: 1px solid $border-color;
+        height: var(--view-header-height);
+        .row {
+          display: flex;
+          .item {
+            flex: 1;
+            text-align: center;
+            font-weight: 300;
+            .view-header-column {
+              border-left: 1px solid $border-color;
+              height: var(--view-header-height);
+              .day-name {
+                display: inline-block;
+                font-size: 15px;
+                padding-top: 15px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
