@@ -61,7 +61,7 @@
     .view-body-relative {
       position: relative;
       overflow: auto;
-      height: calc(100vh - var(--header-height) - var(--view-header-height) - 10px);
+      height: calc(var(--component-height) - var(--header-height) - var(--view-header-height) - 10px);
       .left-scale {
         width: var(--left-scale-width);
         .step-container {
@@ -95,7 +95,9 @@
           .grid-wrapper {
             .row {
               display: flex;
-              border-bottom: 1px solid $border-color;
+              &:not(:last-child) {
+                border-bottom: 1px solid $border-color;
+              }
               .item {
                 flex: 1;
                 border-left: 1px solid $border-color;

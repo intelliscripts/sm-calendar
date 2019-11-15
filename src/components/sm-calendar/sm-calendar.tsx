@@ -1,4 +1,4 @@
-import {Component, Prop, h, Host, State, Watch, Event, EventEmitter} from '@stencil/core';
+import {Component, Prop, h, Host, State, Watch, Event, EventEmitter, Element} from '@stencil/core';
 import moment, {Moment} from 'moment';
 
 import calendar from './calendar/Calendar';
@@ -76,6 +76,10 @@ export class SmCalendar {
   @State() endMoment: Moment;
   @State() eventStore: EventStore = eventStore;
 
+  /**
+   * component DOM reference
+   */
+  @Element() ref: HTMLElement;
 
   /**
    * life cycle methods
@@ -130,8 +134,9 @@ export class SmCalendar {
    * main renderer
    */
   render() {
+    const componentHeight: string = this.ref.style.height + '' || 'calc(100vh - 10px)';
     return (
-      <Host style={{'--theme-color': this.theme}} onClick={() => {}}>
+      <Host style={{'--theme-color': this.theme, '--component-height': componentHeight}} onClick={() => {}}>
         <div class='sm-calendar'>
             {calendar.render(this)}
         </div>

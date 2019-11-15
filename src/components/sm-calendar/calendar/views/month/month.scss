@@ -10,8 +10,12 @@
             flex: 1;
             text-align: center;
             font-weight: 300;
+            &:not(:first-child) {
+              .view-header-column {
+                border-left: 1px solid $border-color;
+              }
+            }
             .view-header-column {
-              border-left: 1px solid $border-color;
               height: var(--view-header-height);
               .day-name {
                 display: inline-block;
@@ -26,18 +30,22 @@
         .view-body-relative {
           position: relative;
           overflow: auto;
-          height: calc(100vh - var(--header-height) - var(--view-header-height) - 10px);
+          height: calc(var(--component-height) - var(--header-height) - var(--view-header-height) - 10px);
           .drawing-area-container {
             .drawing-area-container-relative {
               position: relative;
               .grid-wrapper {
                 .row {
                   display: flex;
-                  border-bottom: 1px solid $border-color;
+                  &:not(:last-child) {
+                    border-bottom: 1px solid $border-color;
+                  }
                   box-sizing: border-box;
                   .item {
                     flex: 1;
-                    border-left: 1px solid $border-color;
+                    &:not(:first-child) {
+                      border-left: 1px solid $border-color;
+                    }
                     box-sizing: border-box;
                     .cell-wrapper {
                       .cell-header {
@@ -52,6 +60,19 @@
                           margin-right: 10px;
                           &:hover {
                             cursor: pointer;
+                          }
+                        }
+                      }
+                    }
+
+                    &.grey-out {
+                      .cell-wrapper {
+                        .cell-header {
+                          .cell-date {
+                            color: $text-color-grey-out;
+                            &:hover {
+                              cursor: default;
+                            }
                           }
                         }
                       }

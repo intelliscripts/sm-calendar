@@ -74,7 +74,7 @@ export class Month extends View{
   getRow(component, rowDates: Array<Moment>, rowcount: number) {
     const cols = [];
 
-    const rowHeight = 'calc((100vh - var(--header-height) - var(--view-header-height) - 10px) / ' + rowcount + ')';
+    const rowHeight = 'calc((var(--component-height) - var(--header-height) - var(--view-header-height) - 10px) / ' + rowcount + ')';
 
     rowDates.forEach((rowDate) => {
       cols.push(this.getCellWrapper(component, rowDate));
@@ -96,12 +96,18 @@ export class Month extends View{
       cls.push('context-date');
     }
 
+    if (!date.isSame(contextMoment, 'month')) {
+      cls.push('grey-out');
+    }
+
     return (
       <div class={cls.join(' ')}>
         <div class='cell-wrapper'>
           <div class='cell-header'>
             <div class='cell-date' onClick={() => {
-              component.contextDate = date.format(INTERNAL_FORMAT.DATE);
+              if (date.isSame(contextMoment, 'month')) {
+                component.contextDate = date.format(INTERNAL_FORMAT.DATE);
+              }
             }}>
               {date.format('DD')}
             </div>
