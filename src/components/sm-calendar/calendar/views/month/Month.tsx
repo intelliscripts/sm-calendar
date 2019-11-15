@@ -77,14 +77,14 @@ export class Month extends View{
     const rowHeight = 'calc((var(--component-height) - var(--header-height) - var(--view-header-height) - 10px) / ' + rowcount + ')';
 
     rowDates.forEach((rowDate) => {
-      cols.push(this.getCellWrapper(component, rowDate));
+      cols.push(this.getCellWrapper(component, rowDate, rowHeight));
     });
     return (<div class='row' style={{height: rowHeight}}>
       {cols}
     </div>);
   }
 
-  getCellWrapper(component, date: Moment) {
+  getCellWrapper(component, date: Moment, rowHeight: string) {
     const cls: Array<string> = ['item'];
     const {contextMoment} =component;
 
@@ -102,7 +102,7 @@ export class Month extends View{
 
     return (
       <div class={cls.join(' ')}>
-        <div class='cell-wrapper'>
+        <div class='cell-wrapper' style={{height: rowHeight}}>
           <div class='cell-header'>
             <div class='cell-date' onClick={() => {
               if (date.isSame(contextMoment, 'month')) {

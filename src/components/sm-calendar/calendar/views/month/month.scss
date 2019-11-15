@@ -44,9 +44,11 @@
                   .item {
                     flex: 1;
                     &:not(:first-child) {
-                      border-left: 1px solid $border-color;
+                      .cell-wrapper {
+                        border-left: 1px solid $border-color;
+                        box-sizing: border-box;
+                      }
                     }
-                    box-sizing: border-box;
                     .cell-wrapper {
                       .cell-header {
                         padding-top: 10px;
@@ -70,7 +72,7 @@
                           .cell-date {
                             color: $text-color-grey-out;
                             &:hover {
-                              cursor: default;
+                              cursor: not-allowed;
                             }
                           }
                         }
