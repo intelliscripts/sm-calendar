@@ -312,18 +312,18 @@ export class Column extends View{
     const dayNames = [];
 
     gridHeaderDates.forEach((date) => {
-      const headerColumnCls: Array<string> = ['view-header-column'];
+      const cls: Array<string> = ['item'];
 
       if (date.isSame(moment(), 'day')) {
-        headerColumnCls.push('today');
+        cls.push('today');
       }
 
       if (date.isSame(contextMoment, 'day')) {
-        headerColumnCls.push('context-date');
+        cls.push('context-date');
       }
 
-      dayNames.push(<div class='item'>
-        <div class={headerColumnCls.join(' ')}>
+      dayNames.push(<div class={cls.join(' ')}>
+        <div class='view-header-column'>
           <div class='day-date' onClick={() => {
             component.contextDate = date.format(INTERNAL_FORMAT.DATE);
           }}>
