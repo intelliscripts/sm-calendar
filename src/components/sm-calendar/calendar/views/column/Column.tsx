@@ -217,7 +217,10 @@ export class Column extends View{
         chunkEvents.push(chunkEvent);
       }
       else {
-        chunkEvents.push(event.clone());
+        const chunkEvent = event.clone();
+        chunkEvent.startMoment = event.startMoment.clone();
+        chunkEvent.endMoment = event.endMoment.clone();
+        chunkEvents.push(chunkEvent);
       }
     });
 

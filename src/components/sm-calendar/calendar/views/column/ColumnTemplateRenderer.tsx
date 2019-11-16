@@ -9,7 +9,7 @@ export class ColumnTemplateRenderer extends TemplateRenderer{
   }
 
   eventContainer(event: CalendarEvent) {
-    const start = event.startMoment.format(INTERNAL_FORMAT.TIME);
+    const start = event.startMoment.format(INTERNAL_FORMAT.DISPLAY_TIME);
     const end = event.endMoment.format(INTERNAL_FORMAT.DISPLAY_TIME);
     return (<div class="event-container">
       <div class="event-title">

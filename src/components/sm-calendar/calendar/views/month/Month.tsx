@@ -4,9 +4,16 @@ import {calculateDateRange} from './month-utils';
 import moment, {Moment} from "moment-timezone";
 import {INTERNAL_FORMAT} from "../../constants";
 import CalendarEvent from "../../utils/events/CalendarEvent";
+import templateRenderer, {MonthTemplateRenderer} from "../month/MonthTemplateRenderer";
 
 export class Month extends View{
   public viewHeaderHeight: number = 50;
+  private eventHeight: number = 20;
+  private eventLeftMargin: number = 5;
+  private eventTopMargin: number = 5;
+  private gridCellHeaderHeight = 35;
+  private maxEventsInCell = 4;
+  public templateRenderer: MonthTemplateRenderer = templateRenderer;
 
   constructor() {
     super();
@@ -55,11 +62,106 @@ export class Month extends View{
   }
 
   renderEvents(component) {
-    component.viewRange.events.forEach((event) => {
-      console.log(event.startMoment.format(INTERNAL_FORMAT.DATE_TIME));
-      console.log(event.endMoment.format(INTERNAL_FORMAT.DATE_TIME));
-      console.log('*******************');
+
+    const events = [];
+
+    this.getEvents(component).forEach((event) => {
+      events.push(this.getEvent(event));
     });
+
+    return (
+      <div class='events-wrapper'>
+        {events}
+      </div>
+    );
+  }
+
+  getEvents(component) {
+    const events: Array<CalendarEvent> = [...component.viewRange.events];
+
+    const gridHeaderDates: Array<Moment> = [...component.viewRange.dates].slice(0, 7);
+
+    const days: Array<number> = [];
+
+    gridHeaderDates.forEach((date) => {
+      days.push(date.day());
+    });
+
+    const gridDates: Array<Moment> = [...component.viewRange.dates];
+
+    const rowMS = [];
+    const rowCount = gridDates.length / 7;
+    for (let i = 0; i < rowCount; i++) {
+      const rowDates: Array<Moment> = gridDates.splice(0, 7);
+      rowMS.push({
+        startMS: rowDates[0].valueOf(),
+        endMS: rowDates[6].valueOf()
+      });
+    }
+
+    const cellEventsMap = {};
+
+    events.forEach((event) => {
+      const eventStartMS = event.startMoment.valueOf();
+
+      const style = {
+        height: this.eventHeight + 'px',
+      };
+
+      const eventCellCount: number = event.endMoment.diff(event.startMoment, 'days');
+      style["width"] = 'calc(' + (((eventCellCount + 1) / 7) * 100) + '%' + ' - ' + (2 * this.eventLeftMargin) + 'px' + ')';
+
+      const eventStartCellIndex:number = days.indexOf(event.startMoment.day());
+      style["left"] = 'calc(' + (((eventStartCellIndex) / 7) * 100) + '%' + ' + ' + this.eventLeftMargin + 'px' + ')';
+
+      const eventEndCellIndex: number = days.indexOf(event.endMoment.day());
+
+      rowMS.forEach((row, index) => {
+        if (eventStartMS > row.startMS && eventStartMS < row.endMS) {
+
+          let start = eventStartCellIndex;
+          while (start <= eventEndCellIndex) {
+            const cellKey: string = index + '_' + start;
+
+            if (!cellEventsMap[cellKey]) {
+              cellEventsMap[cellKey] = {
+                count: 0
+              };
+            }
+            else {
+              cellEventsMap[cellKey].count = cellEventsMap[cellKey].count + 1;
+            }
+            start++;
+          }
+
+          const cellKey: string = index + '_' + eventStartCellIndex;
+          if (cellEventsMap[cellKey].count >= this.maxEventsInCell) {
+            style["display"] = "none";
+          }
+          style["top"] = 'calc(' + (((index) / rowCount) * 100) + '%' + ' + ' + (this.gridCellHeaderHeight + (cellEventsMap[cellKey].count * (this.eventHeight + this.eventTopMargin))) + 'px' + ')';
+        }
+      });
+
+      event.style = style;
+    });
+
+    return events;
+
+  }
+
+  getEvent(event: CalendarEvent) {
+    const eventStyles: object = {
+      ...event.style,
+      background: event.bg_color,
+      color: event.text_color,
+      ['border-color']: event.border_color
+    };
+
+    return (
+      <div class='event' style={{...eventStyles}}>
+        {this.templateRenderer.eventContainer(event)}
+      </div>
+    );
   }
 
   renderGrid(component) {
@@ -71,7 +173,7 @@ export class Month extends View{
   }
 
   renderGridRows(component) {
-    const gridDates: Array<Moment> = component.viewRange.dates;
+    const gridDates: Array<Moment> = [...component.viewRange.dates];
 
     const rows = [];
     const rowCount = gridDates.length / 7;
@@ -113,7 +215,7 @@ export class Month extends View{
     return (
       <div class={cls.join(' ')}>
         <div class='cell-wrapper' style={{height: rowHeight}}>
-          <div class='cell-header'>
+          <div class='cell-header' style={{height: this.gridCellHeaderHeight + 'px'}}>
             <div class='cell-date' onClick={() => {
               if (date.isSame(contextMoment, 'month')) {
                 component.contextDate = date.format(INTERNAL_FORMAT.DATE);
@@ -128,7 +230,7 @@ export class Month extends View{
   }
 
   renderViewHeader(component) {
-    const gridHeaderDates: Array<Moment> = component.viewRange.dates.slice(0, 7);
+    const gridHeaderDates: Array<Moment> = [...component.viewRange.dates].slice(0, 7);
 
     const cls: Array<string> = ['view-header'];
 
@@ -173,7 +275,7 @@ export class Month extends View{
   chunkEvents(component, events: Array<CalendarEvent>) {
     const chunkEvents: Array<CalendarEvent> = [];
 
-    const gridHeaderDates: Array<Moment> = component.viewRange.dates.slice(0, 7);
+    const gridHeaderDates: Array<Moment> = [...component.viewRange.dates].slice(0, 7);
 
     const days: Array<number> = [];
 
@@ -186,8 +288,11 @@ export class Month extends View{
         const eventEndIndex: number = days.indexOf(event.startMoment.day());
         const currentRowEndMoment: Moment = event.startMoment.clone().add(6 - eventEndIndex, 'days').endOf('day');
 
-        if (currentRowEndMoment.isAfter(event.endMoment)) {
-          chunkEvents.push(event.clone());
+        if (currentRowEndMoment.isSameOrAfter(event.endMoment)) {
+          const chunkEvent = event.clone();
+          chunkEvent.startMoment = event.startMoment.clone();
+          chunkEvent.endMoment = event.endMoment.clone();
+          chunkEvents.push(chunkEvent);
         }
         else {
           let startMoment = event.startMoment.clone();
@@ -196,22 +301,26 @@ export class Month extends View{
             const chunkEvent = event.clone();
 
             chunkEvent.startMoment = startMoment.clone();
-            chunkEvent.endMoment = currentRowEndMoment.clone().endOf('day');
+            chunkEvent.endMoment = currentRowEndMoment.clone();
             chunkEvents.push(chunkEvent);
 
             startMoment = chunkEvent.endMoment.clone().add(1, 'day').startOf('day');
-            currentRowEndMoment.add(7, 'days').endOf('day');
+            currentRowEndMoment.add(7, 'days');
           }
 
           const chunkEvent = event.clone();
           chunkEvent.startMoment = startMoment.clone();
           chunkEvent.endMoment = event.endMoment.clone();
 
+
           chunkEvents.push(chunkEvent);
         }
       }
       else {
-        chunkEvents.push(event.clone());
+        const chunkEvent = event.clone();
+        chunkEvent.startMoment = event.startMoment.clone();
+        chunkEvent.endMoment = event.endMoment.clone();
+        chunkEvents.push(chunkEvent);
       }
     });
 

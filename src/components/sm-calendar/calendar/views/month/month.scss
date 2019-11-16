@@ -51,13 +51,13 @@
                     }
                     .cell-wrapper {
                       .cell-header {
-                        padding-top: 10px;
                         text-align: right;
                         .cell-date {
                           border-radius: 50%;
                           text-align: center;
                           padding: 5px;
-                          margin-right: 10px;
+                          margin-right: 5px;
+                          margin-top: 5px;
                           display: inline-block;
                           &:hover {
                             cursor: pointer;
@@ -104,6 +104,20 @@
                   }
                 }
               }
+
+              .events-wrapper {
+                .event {
+                  position: absolute;
+                  overflow: hidden;
+                  .event-container {
+                    padding: 3px;
+                    .event-title {
+                      font-size: 12px;
+                    }
+                  }
+                }
+              }
+
             }
           }
         }
