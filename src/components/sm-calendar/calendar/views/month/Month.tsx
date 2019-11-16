@@ -3,6 +3,7 @@ import {View} from "../view/View";
 import {calculateDateRange} from './month-utils';
 import moment, {Moment} from "moment-timezone";
 import {INTERNAL_FORMAT} from "../../constants";
+import CalendarEvent from "../../utils/events/CalendarEvent";
 
 export class Month extends View{
   public viewHeaderHeight: number = 50;
@@ -47,9 +48,18 @@ export class Month extends View{
       <div class='drawing-area-container'>
         <div class='drawing-area-container-relative'>
           {this.renderGrid(component)}
+          {this.renderEvents(component)}
         </div>
       </div>
     );
+  }
+
+  renderEvents(component) {
+    component.viewRange.events.forEach((event) => {
+      console.log(event.startMoment.format(INTERNAL_FORMAT.DATE_TIME));
+      console.log(event.endMoment.format(INTERNAL_FORMAT.DATE_TIME));
+      console.log('*******************');
+    });
   }
 
   renderGrid(component) {
@@ -79,7 +89,7 @@ export class Month extends View{
     rowDates.forEach((rowDate) => {
       cols.push(this.getCellWrapper(component, rowDate, rowHeight));
     });
-    return (<div class='row' style={{height: rowHeight}}>
+    return (<div class='row' style={{'min-height': rowHeight}}>
       {cols}
     </div>);
   }
@@ -152,6 +162,62 @@ export class Month extends View{
       {component.contextMoment.format('MMM YYYY')}
     </div>);
   }
+
+  public processEventsInViewRange(component, events: Array<CalendarEvent>): Array<CalendarEvent> {
+    let processedEvents: Array<CalendarEvent>;
+    this.chopEvents(component, events);
+    processedEvents = this.chunkEvents(component, events);
+    return processedEvents;
+  }
+
+  chunkEvents(component, events: Array<CalendarEvent>) {
+    const chunkEvents: Array<CalendarEvent> = [];
+
+    const gridHeaderDates: Array<Moment> = component.viewRange.dates.slice(0, 7);
+
+    const days: Array<number> = [];
+
+    gridHeaderDates.forEach((date) => {
+      days.push(date.day());
+    });
+
+    events.forEach((event) => {
+      if (event.isMultiDay) {
+        const eventEndIndex: number = days.indexOf(event.startMoment.day());
+        const currentRowEndMoment: Moment = event.startMoment.clone().add(6 - eventEndIndex, 'days').endOf('day');
+
+        if (currentRowEndMoment.isAfter(event.endMoment)) {
+          chunkEvents.push(event.clone());
+        }
+        else {
+          let startMoment = event.startMoment.clone();
+
+          while (currentRowEndMoment.isBefore(event.endMoment)) {
+            const chunkEvent = event.clone();
+
+            chunkEvent.startMoment = startMoment.clone();
+            chunkEvent.endMoment = currentRowEndMoment.clone().endOf('day');
+            chunkEvents.push(chunkEvent);
+
+            startMoment = chunkEvent.endMoment.clone().add(1, 'day').startOf('day');
+            currentRowEndMoment.add(7, 'days').endOf('day');
+          }
+
+          const chunkEvent = event.clone();
+          chunkEvent.startMoment = startMoment.clone();
+          chunkEvent.endMoment = event.endMoment.clone();
+
+          chunkEvents.push(chunkEvent);
+        }
+      }
+      else {
+        chunkEvents.push(event.clone());
+      }
+    });
+
+    return chunkEvents;
+  }
+
 }
 
 export default new Month();

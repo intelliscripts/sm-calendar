@@ -224,20 +224,6 @@ export class Column extends View{
     return chunkEvents;
   }
 
-  chopEvents(component, events: Array<CalendarEvent>) {
-    events.forEach((event) => {
-      if (event.startMoment.isBefore(component.startMoment)) {
-        event.startMoment = component.startMoment.clone();
-      }
-      if (event.endMoment.isAfter(component.endMoment)) {
-        event.endMoment = component.endMoment.clone();
-      }
-      if (!event.startMoment.isSame(event.endMoment, 'day')){
-        event.isMultiDay = true;
-      }
-    });
-  }
-
   renderGrid(component) {
     return (
       <div class='grid-wrapper'>
