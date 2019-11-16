@@ -106,6 +106,14 @@
               }
 
               .events-wrapper {
+                .view-more {
+                  position: absolute;
+                  font-size: 12px;
+                  text-decoration: underline;
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
                 .event {
                   position: absolute;
                   overflow: hidden;

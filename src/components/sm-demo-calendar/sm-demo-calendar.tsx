@@ -12,6 +12,12 @@ export class SmDemoCalendar {
   @State() events: Array<object> = getEvents();
   @State() contextDate: string = CONTEXT_DATE;
 
+  componentDidLoad() {
+    setTimeout(() => {
+      //this.events = [...this.events, this.events[0]];
+    }, 2000);
+  }
+
   render() {
     return (
       <div class='sm-demo-calendar'>

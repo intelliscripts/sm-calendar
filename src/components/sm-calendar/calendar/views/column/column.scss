@@ -110,6 +110,7 @@
           .events-wrapper {
             .event {
               position: absolute;
+              overflow: hidden;
               .event-container {
                 padding: 5px;
                 .event-title {

@@ -17,7 +17,7 @@ function getEvent(title: string, description: string, start: string, end: string
 
 function generateEvents(contextMoment: Moment) {
   const plus1Moment: Moment = contextMoment.clone().add(1, 'day').startOf('day');
-  const minus2Moment: Moment = contextMoment.clone().add(-2, 'day').startOf('day');
+  //const minus2Moment: Moment = contextMoment.clone().add(-2, 'day').startOf('day');
   const minus7Moment: Moment = contextMoment.clone().add(-7, 'day').startOf('day');
 
   const plus2Moment: Moment = contextMoment.clone().add(2, 'day').startOf('day');
@@ -34,7 +34,8 @@ function generateEvents(contextMoment: Moment) {
   const multiDayEvents: Array<object> = [
     getEvent('multi day event-4', 'sample description', minus7Moment.format(INTERNAL_DATE) + ' 08:00:00', plus7Moment.format(INTERNAL_DATE) + ' 10:00:00'),
     getEvent('multi day event-5', 'sample description', plus2Moment.format(INTERNAL_DATE) + ' 08:00:00', plus7Moment.format(INTERNAL_DATE) + ' 10:00:00'),
-    getEvent('multi day event-6', 'sample description', minus7Moment.format(INTERNAL_DATE) + ' 08:00:00', minus2Moment.format(INTERNAL_DATE) + ' 10:00:00'),
+
+    getEvent('multi day event-6', 'sample description', minus7Moment.format(INTERNAL_DATE) + ' 08:00:00', plus7Moment.format(INTERNAL_DATE) + ' 10:00:00'),
     getEvent('multi day event-7', 'sample description', plus2Moment.format(INTERNAL_DATE) + ' 08:00:00', plus7Moment.format(INTERNAL_DATE) + ' 10:00:00')
   ];
 

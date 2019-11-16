@@ -12,7 +12,7 @@ export class Month extends View{
   private eventLeftMargin: number = 5;
   private eventTopMargin: number = 5;
   private gridCellHeaderHeight = 35;
-  private maxEventsInCell = 4;
+  private maxEventsInCell = 3;
   public templateRenderer: MonthTemplateRenderer = templateRenderer;
 
   constructor() {
@@ -64,20 +64,37 @@ export class Month extends View{
   renderEvents(component) {
 
     const events = [];
+    const links = [];
 
-    this.getEvents(component).forEach((event) => {
+    const {renderedEvents, viewMoreLinks} = this.getEvents(component);
+
+    renderedEvents.forEach((event) => {
       events.push(this.getEvent(event));
+    });
+
+    viewMoreLinks.forEach((viewMoreLink) => {
+      links.push(this.getViewMoreLink(viewMoreLink));
     });
 
     return (
       <div class='events-wrapper'>
         {events}
+        {links}
       </div>
     );
   }
 
+  getViewMoreLink(viewMoreLink) {
+    return (<div class='view-more' style={viewMoreLink.style}>
+      View More
+    </div>);
+  }
+
   getEvents(component) {
     const events: Array<CalendarEvent> = [...component.viewRange.events];
+
+    const renderedEvents: Array<CalendarEvent> = [];
+    const viewMoreLinks = [];
 
     const gridHeaderDates: Array<Moment> = [...component.viewRange.dates].slice(0, 7);
 
@@ -112,11 +129,14 @@ export class Month extends View{
       style["width"] = 'calc(' + (((eventCellCount + 1) / 7) * 100) + '%' + ' - ' + (2 * this.eventLeftMargin) + 'px' + ')';
 
       const eventStartCellIndex:number = days.indexOf(event.startMoment.day());
-      style["left"] = 'calc(' + (((eventStartCellIndex) / 7) * 100) + '%' + ' + ' + this.eventLeftMargin + 'px' + ')';
+
+      const leftPosition: string = 'calc(' + (((eventStartCellIndex) / 7) * 100) + '%' + ' + ' + this.eventLeftMargin + 'px' + ')';
+      style["left"] = leftPosition;
 
       const eventEndCellIndex: number = days.indexOf(event.endMoment.day());
 
       rowMS.forEach((row, index) => {
+
         if (eventStartMS > row.startMS && eventStartMS < row.endMS) {
 
           let start = eventStartCellIndex;
@@ -125,27 +145,53 @@ export class Month extends View{
 
             if (!cellEventsMap[cellKey]) {
               cellEventsMap[cellKey] = {
-                count: 0
+                count: 0,
+                moreEventsPresent: false
               };
             }
             else {
               cellEventsMap[cellKey].count = cellEventsMap[cellKey].count + 1;
             }
+
+            if (cellEventsMap[cellKey].count >= this.maxEventsInCell) {
+              cellEventsMap[cellKey].moreEventsPresent = true;
+
+              const leftPosition: string = 'calc(' + (((start) / 7) * 100) + '%' + ' + ' + this.eventLeftMargin + 'px' + ')';
+
+              const topPosition: string = 'calc(' + (((index + 1) / rowCount) * 100) + '%' + ' - ' + (16) + 'px' + ')';
+
+              const viewMore = {
+                style: {
+                  top: topPosition,
+                  left: leftPosition
+                }
+              };
+              viewMoreLinks.push(viewMore);
+            }
+
+
             start++;
           }
 
           const cellKey: string = index + '_' + eventStartCellIndex;
-          if (cellEventsMap[cellKey].count >= this.maxEventsInCell) {
-            style["display"] = "none";
+
+          const topPosition: string = 'calc(' + (((index) / rowCount) * 100) + '%' + ' + ' + (this.gridCellHeaderHeight + (cellEventsMap[cellKey].count * (this.eventHeight + this.eventTopMargin))) + 'px' + ')';
+
+          style["top"] = topPosition;
+          event.style = style;
+
+          if (cellEventsMap[cellKey].count < this.maxEventsInCell) {
+            renderedEvents.push(event);
           }
-          style["top"] = 'calc(' + (((index) / rowCount) * 100) + '%' + ' + ' + (this.gridCellHeaderHeight + (cellEventsMap[cellKey].count * (this.eventHeight + this.eventTopMargin))) + 'px' + ')';
         }
       });
 
-      event.style = style;
     });
 
-    return events;
+    return {
+      renderedEvents,
+      viewMoreLinks
+    };
 
   }
 

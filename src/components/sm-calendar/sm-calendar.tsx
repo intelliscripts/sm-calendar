@@ -102,6 +102,10 @@ export class SmCalendar {
     this.updateView();
   }
 
+  @Watch('events') handleEventsChange() {
+    this.eventStore.parseEvents(this.events, this.timezone);
+  }
+
   /**
    * Events
    */

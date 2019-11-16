@@ -18,6 +18,7 @@ export class EventStore {
    * @param timezone
    */
   parseEvents(rawEvents: Array<object> = [], timezone: string) {
+    this.flush();
     rawEvents.forEach((rawEvent) => {
       this.addEvent(rawEvent, timezone);
     });
@@ -37,7 +38,7 @@ export class EventStore {
       }
     });
 
-    return events;
+    return events.sort((a, b) => a.startMoment.diff(b.startMoment));
   }
 
 }
