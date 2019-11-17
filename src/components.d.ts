@@ -80,6 +80,7 @@ declare namespace LocalJSX {
     /**
     * Events
     */
+    'onEventClick'?: (event: CustomEvent<any>) => void;
     'onViewChange'?: (event: CustomEvent<any>) => void;
     /**
     * Theme

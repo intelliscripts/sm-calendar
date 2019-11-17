@@ -76,7 +76,7 @@ export class Column extends View{
     const events = [];
 
     this.getEvents(component).forEach((event) => {
-      events.push(this.getEvent(event));
+      events.push(this.getEvent(component, event));
     });
 
     return (
@@ -116,7 +116,7 @@ export class Column extends View{
     return events;
   }
 
-  getEvent(event: CalendarEvent) {
+  getEvent(component, event: CalendarEvent) {
     const eventStyles: object = {
       ...event.style,
       background: event.bg_color,
@@ -125,7 +125,11 @@ export class Column extends View{
     };
 
     return (
-      <div class='event' style={{...eventStyles}}>
+      <div class='event' style={{...eventStyles}} onClick={() => {
+        component.viewChange.emit({
+          event: event.rawEvent,
+        });
+      }}>
         {this.templateRenderer.eventContainer(event)}
       </div>
     );

@@ -69,7 +69,7 @@ export class Month extends View{
     const {renderedEvents, viewMoreLinks} = this.getEvents(component);
 
     renderedEvents.forEach((event) => {
-      events.push(this.getEvent(event));
+      events.push(this.getEvent(component, event));
     });
 
     viewMoreLinks.forEach((viewMoreLink) => {
@@ -195,7 +195,7 @@ export class Month extends View{
 
   }
 
-  getEvent(event: CalendarEvent) {
+  getEvent(component, event: CalendarEvent) {
     const eventStyles: object = {
       ...event.style,
       background: event.bg_color,
@@ -204,7 +204,11 @@ export class Month extends View{
     };
 
     return (
-      <div class='event' style={{...eventStyles}}>
+      <div class='event' style={{...eventStyles}} onClick={() => {
+        component.viewChange.emit({
+          event: event.rawEvent,
+        });
+      }}>
         {this.templateRenderer.eventContainer(event)}
       </div>
     );

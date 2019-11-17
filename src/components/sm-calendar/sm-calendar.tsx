@@ -111,6 +111,13 @@ export class SmCalendar {
    */
 
   @Event({
+    eventName: EVENTS.EVENT_CLICK,
+    composed: true,
+    cancelable: true,
+    bubbles: true,
+  }) eventClick: EventEmitter;
+
+  @Event({
     eventName: EVENTS.VIEW_CHANGE,
     composed: true,
     cancelable: true,

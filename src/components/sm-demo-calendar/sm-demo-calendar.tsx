@@ -23,6 +23,8 @@ export class SmDemoCalendar {
       <div class='sm-demo-calendar'>
         <sm-calendar events={this.events} view="month" context-date={this.contextDate} onViewChange={(_payload) => {
           //console.log(payload.detail);
+        }} onEventClick={(_payload) => {
+          //console.log(payload.detail);
         }}/>
       </div>
     );

@@ -22,7 +22,8 @@
 
 | Event        | Description | Type               |
 | ------------ | ----------- | ------------------ |
-| `viewChange` | Events      | `CustomEvent<any>` |
+| `eventClick` | Events      | `CustomEvent<any>` |
+| `viewChange` |             | `CustomEvent<any>` |
 
 
 ## Dependencies
