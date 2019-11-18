@@ -2,11 +2,13 @@
 @import "variables";
 
 @import "custom-styles";
-@import "../calendar/header/header";
 
+@import "../calendar/calendar";
+@import "../calendar/header/header";
 @import "../calendar/views/view/view";
 @import "../calendar/views/column/column";
 @import "../calendar/views/month/month";
+@import "../calendar/views/contextpanel/context-panel";
 
 :host {
   --theme-color: teal;

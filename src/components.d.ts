@@ -24,6 +24,10 @@ export namespace Components {
     */
     'events': Array<object>;
     /**
+    * showContextPanel
+    */
+    'showContextPanel': boolean;
+    /**
     * Theme
     */
     'theme': string;
@@ -82,6 +86,10 @@ declare namespace LocalJSX {
     */
     'onEventClick'?: (event: CustomEvent<any>) => void;
     'onViewChange'?: (event: CustomEvent<any>) => void;
+    /**
+    * showContextPanel
+    */
+    'showContextPanel'?: boolean;
     /**
     * Theme
     */

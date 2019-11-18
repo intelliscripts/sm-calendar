@@ -1,0 +1,10 @@
+.sm-calendar-body {
+  display: flex;
+  .view-container {
+    flex: 1;
+  }
+  .context-panel-container {
+    width: 300px;
+    border-left: 1px solid $border-color;
+  }
+}

@@ -3,6 +3,7 @@ import header from './header/Header';
 import dayView from './views/day/Day';
 import weekView from './views/week/Week';
 import monthView from './views/month/Month';
+import contextPanel from './views/contextpanel/ContextPanel';
 import {VIEWS} from "./constants";
 
 class Calendar {
@@ -18,6 +19,7 @@ class Calendar {
 
   render(component) {
     component.viewRenderer = this.getViewRenderer(component);
+    component.contextPanel = contextPanel;
 
     const {startMoment, endMoment} = component;
 
@@ -32,6 +34,7 @@ class Calendar {
         </header>
         <div class='sm-calendar-body'>
           {component.viewRenderer.render(component)}
+          {component.contextPanel.render(component)}
         </div>
       </div>
     );

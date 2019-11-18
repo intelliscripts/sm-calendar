@@ -1,0 +1,12 @@
+.context-panel-container {
+  .context-panel-wrapper {
+    .context-panel-header {
+      border-bottom: 1px solid $border-color;
+      .context-date {
+        padding: 15px 0px;
+        text-align: center;
+        font-size: 17px;
+      }
+    }
+  }
+}

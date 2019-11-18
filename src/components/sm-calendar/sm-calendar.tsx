@@ -67,6 +67,14 @@ export class SmCalendar {
     mutable: true,
   }) events: Array<object> = [];
 
+  /**
+   * showContextPanel
+   */
+
+  @Prop({
+    reflect: true,
+    mutable: true,
+  }) showContextPanel: boolean = true;
 
   /**
    * state variables
