@@ -46,6 +46,13 @@ class Header {
           }}>
           </div>
         </div>
+        <div class='nav-item'>
+          <sm-date-picker onDateSelected={(payload) => {
+            if (component.contextMoment.format(INTERNAL_FORMAT.DATE) !== payload.detail) {
+              component.contextDate = payload.detail;
+            }
+          }} theme={component.theme} date={component.contextMoment.format(INTERNAL_FORMAT.DATE)} week-start-day={component.weekStartDay}></sm-date-picker>
+        </div>
       </div>
     );
   }

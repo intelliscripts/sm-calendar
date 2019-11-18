@@ -1,0 +1,53 @@
+.down-triangle {
+  float: right;
+  margin-top: 5px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid black;
+}
+
+.left-triangle {
+  float: right;
+  margin-top: 3px;
+  margin-right: 25px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-right: 7px solid var(--theme-color);
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.right-triangle {
+  margin-top: 3px;
+  margin-left: 25px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 7px solid var(--theme-color);
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.sm-button {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding: 8px;
+  box-shadow: none;
+  border: none;
+  font-size: 14px;
+  background: $color-white;
+  &.primary {
+    color: var(--theme-color);
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}

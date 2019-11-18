@@ -1,6 +1,5 @@
 import templateRenderer, {ContextPanelTemplateRenderer} from "./ContextPanelTemplateRenderer";
 import {h} from "@stencil/core";
-import {INTERNAL_FORMAT} from "../../constants";
 
 class ContextPanel {
   public templateRenderer: ContextPanelTemplateRenderer = templateRenderer;
@@ -24,7 +23,7 @@ class ContextPanel {
   renderHeader(component) {
     return (<div class='context-panel-header'>
       <div class='context-date'>
-        {component.contextMoment.format(INTERNAL_FORMAT.DATE)}
+        {component.contextMoment.format('DD MMM, YYYY')}
       </div>
     </div>);
   }

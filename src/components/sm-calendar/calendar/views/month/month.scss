@@ -4,6 +4,7 @@
       .view-header {
         border-bottom: 1px solid $border-color;
         height: var(--view-header-height);
+        overflow-y: scroll;
         .row {
           display: flex;
           .item {
@@ -29,7 +30,7 @@
       .view-body {
         .view-body-relative {
           position: relative;
-          overflow: auto;
+          overflow-y: scroll;;
           height: calc(var(--component-height) - var(--header-height) - var(--view-header-height) - 10px);
           .drawing-area-container {
             .drawing-area-container-relative {
@@ -43,6 +44,7 @@
                   box-sizing: border-box;
                   .item {
                     flex: 1;
+                    overflow: hidden;
                     &:not(:first-child) {
                       .cell-wrapper {
                         border-left: 1px solid $border-color;

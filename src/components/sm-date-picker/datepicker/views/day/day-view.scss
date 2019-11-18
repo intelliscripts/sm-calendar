@@ -1,0 +1,41 @@
+.day-view-container {
+  .view-header {
+    display: flex;
+    margin: 10px 0px;
+    .day-name {
+      flex: 1;
+      font-size: 14px;
+      text-align: center;
+    }
+  }
+  .view-content {
+    .date-row {
+      display: flex;
+      .date-cell {
+        flex: 1;
+        text-align: center;
+        padding: 11px;
+        font-size: 13px;
+        font-weight: 300;
+        border-radius: 50%;
+        &.today {
+          border: 1px solid var(--theme-color);
+        }
+        &.selected {
+          background: var(--theme-color);
+          color: $color-white !important;
+        }
+        &.grey-out {
+          color: $border-color;
+          cursor: not-allowed !important;
+        }
+        &:hover {
+          cursor: pointer;
+          background: var(--theme-color);
+          opacity: 0.4;
+          color: $color-white !important;
+        }
+      }
+    }
+  }
+}

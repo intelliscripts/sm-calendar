@@ -44,7 +44,26 @@ export namespace Components {
     */
     'weekStartDay': string;
   }
+  interface SmDatePicker {
+    /**
+    * date
+    */
+    'date': string;
+    /**
+    * showPicker
+    */
+    'showPicker': boolean;
+    /**
+    * Theme
+    */
+    'theme': string;
+    /**
+    * weekStartDay
+    */
+    'weekStartDay': string;
+  }
   interface SmDemoCalendar {}
+  interface SmDemoDatePicker {}
 }
 
 declare global {
@@ -56,14 +75,28 @@ declare global {
     new (): HTMLSmCalendarElement;
   };
 
+  interface HTMLSmDatePickerElement extends Components.SmDatePicker, HTMLStencilElement {}
+  var HTMLSmDatePickerElement: {
+    prototype: HTMLSmDatePickerElement;
+    new (): HTMLSmDatePickerElement;
+  };
+
   interface HTMLSmDemoCalendarElement extends Components.SmDemoCalendar, HTMLStencilElement {}
   var HTMLSmDemoCalendarElement: {
     prototype: HTMLSmDemoCalendarElement;
     new (): HTMLSmDemoCalendarElement;
   };
+
+  interface HTMLSmDemoDatePickerElement extends Components.SmDemoDatePicker, HTMLStencilElement {}
+  var HTMLSmDemoDatePickerElement: {
+    prototype: HTMLSmDemoDatePickerElement;
+    new (): HTMLSmDemoDatePickerElement;
+  };
   interface HTMLElementTagNameMap {
     'sm-calendar': HTMLSmCalendarElement;
+    'sm-date-picker': HTMLSmDatePickerElement;
     'sm-demo-calendar': HTMLSmDemoCalendarElement;
+    'sm-demo-date-picker': HTMLSmDemoDatePickerElement;
   }
 }
 
@@ -107,11 +140,33 @@ declare namespace LocalJSX {
     */
     'weekStartDay'?: string;
   }
+  interface SmDatePicker {
+    /**
+    * date
+    */
+    'date'?: string;
+    'onDateSelected'?: (event: CustomEvent<any>) => void;
+    /**
+    * showPicker
+    */
+    'showPicker'?: boolean;
+    /**
+    * Theme
+    */
+    'theme'?: string;
+    /**
+    * weekStartDay
+    */
+    'weekStartDay'?: string;
+  }
   interface SmDemoCalendar {}
+  interface SmDemoDatePicker {}
 
   interface IntrinsicElements {
     'sm-calendar': SmCalendar;
+    'sm-date-picker': SmDatePicker;
     'sm-demo-calendar': SmDemoCalendar;
+    'sm-demo-date-picker': SmDemoDatePicker;
   }
 }
 
@@ -122,7 +177,9 @@ declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
       'sm-calendar': LocalJSX.SmCalendar & JSXBase.HTMLAttributes<HTMLSmCalendarElement>;
+      'sm-date-picker': LocalJSX.SmDatePicker & JSXBase.HTMLAttributes<HTMLSmDatePickerElement>;
       'sm-demo-calendar': LocalJSX.SmDemoCalendar & JSXBase.HTMLAttributes<HTMLSmDemoCalendarElement>;
+      'sm-demo-date-picker': LocalJSX.SmDemoDatePicker & JSXBase.HTMLAttributes<HTMLSmDemoDatePickerElement>;
     }
   }
 }

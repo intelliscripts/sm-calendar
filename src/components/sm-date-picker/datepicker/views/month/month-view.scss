@@ -1,0 +1,20 @@
+.month-view-container {
+  .month-row {
+    display: flex;
+    margin: 10px;
+    .month-cell {
+      flex: 1;
+      text-align: center;
+      margin: 10px;
+      font-weight: 300;
+      font-size: 15px;
+      &.current-month {
+        color: var(--theme-color);
+      }
+      &:hover {
+        cursor: pointer;
+        color: var(--theme-color);
+      }
+    }
+  }
+}

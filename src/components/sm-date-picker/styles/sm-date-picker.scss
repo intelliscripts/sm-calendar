@@ -1,0 +1,65 @@
+@import "~reset-css/reset.css";
+@import "variables";
+
+@import "custom-styles";
+@import "../datepicker/views/day/day-view";
+@import "../datepicker/views/month/month-view";
+
+:host {
+  --theme-color: teal;
+}
+
+.sm-date-picker {
+  width: 150px;
+  border-bottom: 1px solid $border-color;
+  position: relative;
+  font-family: 'Open Sans', sans-serif;
+  .today-button {
+    float: right;
+  }
+.sm-date-picker-container {
+    .sm-date-picker-dropdown {
+      padding: 8px;
+      text-align: center;
+      font-weight: 300;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .sm-date-picker-popover {
+      position: absolute;
+      top: 38px;
+      left: -1px;
+      width: 300px;
+      box-shadow: 0 0 5px $border-color;
+      height: auto;
+      border: 1px solid $border-color;
+      min-height: 200px;
+      background: $color-white;
+      z-index: 9;
+      .sm-date-picker-popover-container {
+        padding: 8px;
+        .view-navigation {
+          display: flex;
+          padding-bottom: 10px;
+          margin-top: 10px;
+          .nav-item {
+            flex: 1;
+            text-align: center;
+            &.label {
+              flex: 3;
+              cursor: default;
+              color: var(--theme-color);
+              padding-top: 2px;
+              span {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
