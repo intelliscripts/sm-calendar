@@ -58,4 +58,8 @@ export class View {
     </div>);
   }
 
+  public getDatePickerLabel(component) {
+    return component.startMoment.format('DD MMM, YYYY') + ' - ' + component.endMoment.format('DD MMM, YYYY');
+  }
+
 }

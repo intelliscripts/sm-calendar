@@ -19,8 +19,12 @@ class Day extends Column {
 
   public getHeaderText(component) {
     return(<div>
-      {component.startMoment.format('DD MMM YYYY')}
+      {component.contextMoment.format('DD MMM YYYY')}
     </div>);
+  }
+
+  public getDatePickerLabel(component) {
+    return component.contextMoment.format('DD MMM YYYY');
   }
 
 }

@@ -50,6 +50,10 @@ export namespace Components {
     */
     'date': string;
     /**
+    * label
+    */
+    'label': string;
+    /**
     * showPicker
     */
     'showPicker': boolean;
@@ -145,6 +149,10 @@ declare namespace LocalJSX {
     * date
     */
     'date'?: string;
+    /**
+    * label
+    */
+    'label'?: string;
     'onDateSelected'?: (event: CustomEvent<any>) => void;
     /**
     * showPicker

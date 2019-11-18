@@ -18,6 +18,9 @@
         .nav-item {
           display: inline-block;
           vertical-align: middle;
+          .date-picker {
+            margin-left: 15px;
+          }
         }
       }
       .view-list {

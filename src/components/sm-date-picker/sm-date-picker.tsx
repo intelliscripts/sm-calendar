@@ -46,6 +46,14 @@ export class SmDatePicker {
   @State() contextMoment: Moment = moment(this.date, INTERNAL_DATE);
   @State() navMoment: Moment = moment(this.date, INTERNAL_DATE);
 
+  /**
+   * label
+   */
+  @Prop({
+    reflect: true,
+    mutable: true,
+  }) label: string;
+
   @Watch('date') handleDateChange(date: string) {
     this.dateSelected.emit(date);
     this.contextMoment = moment(date, INTERNAL_DATE);

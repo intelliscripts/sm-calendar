@@ -315,6 +315,10 @@ export class Month extends View{
     </div>);
   }
 
+  public getDatePickerLabel(component) {
+    return component.contextMoment.format('MMM YYYY');
+  }
+
   public processEventsInViewRange(component, events: Array<CalendarEvent>): Array<CalendarEvent> {
     let processedEvents: Array<CalendarEvent>;
     this.chopEvents(component, events);

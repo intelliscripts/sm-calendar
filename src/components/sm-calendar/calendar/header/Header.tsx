@@ -11,9 +11,6 @@ class Header {
             {this.renderViewNavigation(component)}
           </div>
           <div class='header-section'>
-            {this.renderViewRange(component)}
-          </div>
-          <div class='header-section'>
             {this.renderViewButton(component)}
           </div>
         </div>
@@ -47,12 +44,14 @@ class Header {
           </div>
         </div>
         <div class='nav-item'>
-          <sm-date-picker onDateSelected={(payload) => {
-            if (component.contextMoment.format(INTERNAL_FORMAT.DATE) !== payload.detail) {
-              component.contextDate = payload.detail;
-            }
-          }} theme={component.theme} date={component.contextMoment.format(INTERNAL_FORMAT.DATE)} week-start-day={component.weekStartDay}></sm-date-picker>
-        </div>
+          <div class='date-picker'>
+            <sm-date-picker onDateSelected={(payload) => {
+              if (component.contextMoment.format(INTERNAL_FORMAT.DATE) !== payload.detail) {
+                component.contextDate = payload.detail;
+              }
+            }} label={component.viewRenderer.getDatePickerLabel(component)} theme={component.theme} date={component.contextMoment.format(INTERNAL_FORMAT.DATE)} week-start-day={component.weekStartDay}></sm-date-picker>
+          </div>
+         </div>
       </div>
     );
   }

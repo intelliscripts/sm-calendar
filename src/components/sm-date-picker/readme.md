@@ -10,6 +10,7 @@
 | Property       | Attribute        | Description  | Type      | Default                          |
 | -------------- | ---------------- | ------------ | --------- | -------------------------------- |
 | `date`         | `date`           | date         | `string`  | `moment().format(INTERNAL_DATE)` |
+| `label`        | `label`          | label        | `string`  | `undefined`                      |
 | `showPicker`   | `show-picker`    | showPicker   | `boolean` | `false`                          |
 | `theme`        | `theme`          | Theme        | `string`  | `'teal'`                         |
 | `weekStartDay` | `week-start-day` | weekStartDay | `string`  | `'sun'`                          |
