@@ -3,15 +3,14 @@ import moment, {Moment} from 'moment-timezone';
 const INTERNAL_DATE: string = 'YYYY-MM-DD';
 export const CONTEXT_DATE: string = '2019-11-06';
 
-function getEvent(title: string, description: string, start: string, end: string, text_color: string = '#000', bg_color: string = '', border_color: string = '') {
+function getEvent(title: string, description: string, start: string, end: string, text_color: string = '', bg_color: string = '') {
   return{
     start,
     end,
     bg_color,
     description,
     text_color,
-    title,
-    border_color
+    title
   };
 }
 
@@ -32,7 +31,7 @@ function generateEvents(contextMoment: Moment) {
   ];
 
   const multiDayEvents: Array<object> = [
-    getEvent('multi day event-4', 'sample description', minus7Moment.format(INTERNAL_DATE) + ' 08:00:00', plus7Moment.format(INTERNAL_DATE) + ' 10:00:00'),
+    getEvent('multi day event-4', 'sample description', minus7Moment.format(INTERNAL_DATE) + ' 08:00:00', plus7Moment.format(INTERNAL_DATE) + ' 10:00:00', '', 'orange'),
     getEvent('multi day event-5', 'sample description', plus2Moment.format(INTERNAL_DATE) + ' 08:00:00', plus7Moment.format(INTERNAL_DATE) + ' 10:00:00'),
 
     getEvent('multi day event-6', 'sample description', minus7Moment.format(INTERNAL_DATE) + ' 08:00:00', plus7Moment.format(INTERNAL_DATE) + ' 10:00:00'),

@@ -8,5 +8,40 @@
         font-size: 17px;
       }
     }
+    .context-panel-body {
+      .no-events {
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 20px;
+        color: #aaa;
+      }
+      .context-panel-event {
+        width: 90%;
+        margin: 10px auto;
+        border: 1px solid $border-color;
+        border-left: 3px solid var(--theme-color);
+        .context-panel-event-header {
+          font-size: 14px;
+          margin: 5px 10px;
+          border-bottom: 1px solid $border-color;
+          .event-time {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 5px;
+          }
+        }
+        .context-panel-event-body{
+          margin: 5px 10px;
+          .event-title {
+            font-size: 14px;
+          }
+          .event-description {
+            margin-top: 10px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
   }
 }
