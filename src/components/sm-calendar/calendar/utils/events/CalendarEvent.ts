@@ -1,6 +1,6 @@
 import {INTERNAL_DATE_TIME_REGEX, INTERNAL_FORMAT} from "../../constants";
 import moment,{Moment} from 'moment-timezone';
-import {getBgColor, getTextColor, getBorderColor} from "../common/color-utils";
+import {negate, darken} from "../common/color-utils";
 
 class CalendarEvent {
 
@@ -48,13 +48,13 @@ class CalendarEvent {
     }
 
     if (this.bg_color && !this.text_color) {
-      this.text_color = getTextColor(this.bg_color);
+      this.text_color = negate(this.bg_color);
     }
     if (this.text_color && !this.bg_color) {
-      this.bg_color = getBgColor(this.text_color);
+      this.bg_color = negate(this.text_color);
     }
     if (this.bg_color) {
-      this.border_color = getBorderColor(this.bg_color);
+      this.border_color = darken(this.bg_color, 0.2);
     }
   }
 

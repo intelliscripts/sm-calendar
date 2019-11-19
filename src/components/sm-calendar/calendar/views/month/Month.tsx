@@ -5,6 +5,7 @@ import moment, {Moment} from "moment-timezone";
 import {INTERNAL_FORMAT} from "../../constants";
 import CalendarEvent from "../../utils/events/CalendarEvent";
 import templateRenderer, {MonthTemplateRenderer} from "../month/MonthTemplateRenderer";
+import {fade} from "../../utils/common/color-utils";
 
 export class Month extends View{
   public viewHeaderHeight: number = 50;
@@ -73,7 +74,7 @@ export class Month extends View{
     });
 
     viewMoreLinks.forEach((viewMoreLink) => {
-      links.push(this.getViewMoreLink(viewMoreLink));
+      links.push(this.getViewMoreLink(component, viewMoreLink));
     });
 
     return (
@@ -84,8 +85,10 @@ export class Month extends View{
     );
   }
 
-  getViewMoreLink(viewMoreLink) {
-    return (<div class='view-more' style={viewMoreLink.style}>
+  getViewMoreLink(component, viewMoreLink) {
+    return (<div class='view-more' style={viewMoreLink.style} onClick={() => {
+      component.contextDate = viewMoreLink.date.format(INTERNAL_FORMAT.DATE);
+    }}>
       View More
     </div>);
   }
@@ -163,8 +166,9 @@ export class Month extends View{
               const viewMore = {
                 style: {
                   top: topPosition,
-                  left: leftPosition
-                }
+                  left: leftPosition,
+                },
+                date: event.startMoment.clone().add(start - eventStartCellIndex, 'days')
               };
               viewMoreLinks.push(viewMore);
             }
@@ -249,9 +253,13 @@ export class Month extends View{
   getCellWrapper(component, date: Moment, rowHeight: string) {
     const cls: Array<string> = ['item'];
     const {contextMoment} =component;
+    const cellStyles = {
+      background: ''
+    };
 
     if (date.isSame(moment(), 'day')) {
       cls.push('today');
+      cellStyles.background = fade(component.theme, 0.9);
     }
 
     if (date.isSame(contextMoment, 'day')) {
@@ -263,7 +271,7 @@ export class Month extends View{
     }
 
     return (
-      <div class={cls.join(' ')}>
+      <div class={cls.join(' ')} style={cellStyles}>
         <div class='cell-wrapper' style={{height: rowHeight}}>
           <div class='cell-header' style={{height: this.gridCellHeaderHeight + 'px'}}>
             <div class='cell-date' onClick={() => {
