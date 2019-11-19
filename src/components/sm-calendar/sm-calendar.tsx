@@ -1,4 +1,4 @@
-import {Component, Prop, h, Host, State, Watch, Event, EventEmitter, Element} from '@stencil/core';
+import {Component, Prop, h, Host, State, Watch, Event, EventEmitter, Element, Listen} from '@stencil/core';
 import moment, {Moment} from 'moment';
 
 import calendar from './calendar/Calendar';
@@ -131,6 +131,25 @@ export class SmCalendar {
     cancelable: true,
     bubbles: true,
   }) viewChange: EventEmitter;
+
+  /**
+   *
+   * Listners
+   */
+  @Listen('click', { capture: true })
+  handleClick(mouseEvent) {
+    const path = mouseEvent.composedPath ? mouseEvent.composedPath() : mouseEvent.path;
+    let clickedInsideDatePicker = false;
+    for (let i = 0; i < path.length; i++) {
+      if (path[i].classList && path[i].classList.contains('sm-date-picker')) {
+        clickedInsideDatePicker = true;
+        break;
+      }
+    }
+    if (!clickedInsideDatePicker) {
+      this.ref.shadowRoot.querySelector('sm-date-picker').showPicker = false;
+    }
+  }
 
   /**
    * functions
