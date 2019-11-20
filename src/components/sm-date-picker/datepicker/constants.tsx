@@ -1,3 +1,5 @@
+import {INTERFACE_INTERNAL_FORMAT} from "./interface";
+
 interface WEEK_DAYS {
   sun: number;
   mon: number;
@@ -30,4 +32,9 @@ export const PICKER_VIEWS: PICKER_VIEWS = {
   YEAR: 'YEAR'
 };
 
-export const INTERNAL_DATE: string = 'YYYY-MM-DD';
+export const INTERNAL_FORMAT: INTERFACE_INTERNAL_FORMAT = {
+  DATE: 'YYYY-MM-DD',
+  TIME: 'HH:mm:ss',
+  DATE_TIME: 'YYYY-MM-DD HH:mm:ss',
+  DISPLAY_TIME: 'HH:mm'
+};

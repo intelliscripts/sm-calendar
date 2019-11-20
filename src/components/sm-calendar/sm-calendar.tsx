@@ -4,6 +4,7 @@ import moment, {Moment} from 'moment';
 import calendar from './calendar/Calendar';
 import {EVENTS, INTERNAL_FORMAT, VIEWS, WEEK_DAYS} from "./calendar/constants";
 import eventStore, {EventStore} from "./calendar/utils/events/EventStore";
+import CalendarEvent from "./calendar/utils/events/CalendarEvent";
 
 @Component({
   tag: 'sm-calendar',
@@ -83,6 +84,7 @@ export class SmCalendar {
   @State() startMoment: Moment;
   @State() endMoment: Moment;
   @State() eventStore: EventStore = eventStore;
+  @State() selectedEvent: CalendarEvent;
 
   /**
    * component DOM reference

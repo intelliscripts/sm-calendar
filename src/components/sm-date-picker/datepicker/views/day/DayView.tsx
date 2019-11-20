@@ -1,5 +1,5 @@
-import moment, {Moment} from "moment";
-import {INTERNAL_DATE, PICKER_VIEWS, WEEK_DAYS} from "../../constants";
+import moment, {Moment} from "moment-timezone";
+import {INTERNAL_FORMAT, PICKER_VIEWS, WEEK_DAYS} from "../../constants";
 import {h} from "@stencil/core";
 import {calculateDateRange} from './day-view-utils';
 
@@ -29,7 +29,7 @@ class DayView {
         </button>
 
         <button class='sm-button primary today-button' onClick={() => {
-          component.date = moment().format(INTERNAL_DATE);
+          component.date = moment().format(INTERNAL_FORMAT.DATE);
           component.showPicker = false;
         }}>Today</button>
       </div>
@@ -111,7 +111,7 @@ class DayView {
 
       cells.push(<div class={cls.join(' ')} onClick={() => {
         if (component.contextMoment.isSame(date, 'month')) {
-          component.date = date.format(INTERNAL_DATE);
+          component.date = date.format(INTERNAL_FORMAT.DATE);
           component.showPicker = false;
         }
       }}>

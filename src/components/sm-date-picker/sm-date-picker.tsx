@@ -1,6 +1,6 @@
 import {Component, Prop, h, Watch, Event, EventEmitter, State, Host} from '@stencil/core';
-import moment, {Moment} from 'moment';
-import {PICKER_VIEWS, INTERNAL_DATE} from './datepicker/constants';
+import moment, {Moment} from 'moment-timezone';
+import {PICKER_VIEWS, INTERNAL_FORMAT} from './datepicker/constants';
 
 import datePicker from './datepicker/DatePicker';
 
@@ -24,7 +24,7 @@ export class SmDatePicker {
   @Prop({
     reflect: true,
     mutable: true,
-  }) date: string = moment().format(INTERNAL_DATE);
+  }) date: string = moment().format(INTERNAL_FORMAT.DATE);
 
   /**
    * showPicker
@@ -43,8 +43,8 @@ export class SmDatePicker {
   }) theme: string = 'teal';
 
   @State() pickerView: string = PICKER_VIEWS.DAY;
-  @State() contextMoment: Moment = moment(this.date, INTERNAL_DATE);
-  @State() navMoment: Moment = moment(this.date, INTERNAL_DATE);
+  @State() contextMoment: Moment = moment(this.date, INTERNAL_FORMAT.DATE);
+  @State() navMoment: Moment = moment(this.date, INTERNAL_FORMAT.DATE);
 
   /**
    * label
@@ -56,7 +56,7 @@ export class SmDatePicker {
 
   @Watch('date') handleDateChange(date: string) {
     this.dateSelected.emit(date);
-    this.contextMoment = moment(date, INTERNAL_DATE);
+    this.contextMoment = moment(date, INTERNAL_FORMAT.DATE);
   }
 
   @Watch('contextMoment') handleContextMomentChange(contextMoment: Moment) {
@@ -66,7 +66,7 @@ export class SmDatePicker {
 
   @Watch('showPicker') handleShowPickerChange() {
     this.pickerView = PICKER_VIEWS.DAY;
-    this.contextMoment = moment(this.date, INTERNAL_DATE);
+    this.contextMoment = moment(this.date, INTERNAL_FORMAT.DATE);
   }
 
   @Event({

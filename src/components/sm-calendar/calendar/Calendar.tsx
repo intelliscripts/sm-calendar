@@ -4,6 +4,7 @@ import dayView from './views/day/Day';
 import weekView from './views/week/Week';
 import monthView from './views/month/Month';
 import contextPanel from './views/contextpanel/ContextPanel';
+import editEvent from './edit-event/EditEvent';
 import {VIEWS} from "./constants";
 
 class Calendar {
@@ -35,6 +36,9 @@ class Calendar {
         <div class='sm-calendar-body'>
           {component.viewRenderer.render(component)}
           {component.contextPanel.render(component)}
+        </div>
+        <div class='sm-calendar-other'>
+          {editEvent.render(component)}
         </div>
       </div>
     );

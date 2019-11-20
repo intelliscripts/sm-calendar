@@ -204,14 +204,15 @@ export class Month extends View{
       ...event.style,
       background: event.bg_color,
       color: event.text_color,
-      ['border-color']: event.border_color
+      ['border-color']: event.borderColor
     };
 
     return (
       <div class='event' style={{...eventStyles}} onClick={() => {
-        component.viewChange.emit({
+        component.eventClick.emit({
           event: event.rawEvent,
         });
+        component.selectedEvent = event;
       }}>
         {this.templateRenderer.eventContainer(event)}
       </div>

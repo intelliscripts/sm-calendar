@@ -1,7 +1,8 @@
 import {h} from "@stencil/core";
-import {INTERNAL_DATE, PICKER_VIEWS} from './constants';
+import {PICKER_VIEWS} from './constants';
 import dayView from './views/day/DayView';
 import monthView from './views/month/MonthView';
+import moment from 'moment-timezone';
 
 class DatePicker {
 
@@ -12,7 +13,7 @@ class DatePicker {
   renderHeader(component) {
     return (
       <div class='sm-date-picker-dropdown' onClick={() => this.togglePicker(component)}>
-        <span>{component.label || component.contextMoment.format(INTERNAL_DATE)}</span>
+        <span>{component.label || moment(component.date).format('DD MMM YYYY')}</span>
         <div class="down-triangle">
         </div>
       </div>

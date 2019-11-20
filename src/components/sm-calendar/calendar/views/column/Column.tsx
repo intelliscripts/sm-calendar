@@ -121,7 +121,7 @@ export class Column extends View{
       ...event.style,
       background: event.bg_color,
       color: event.text_color,
-      ['border-color']: event.border_color
+      ['border-color']: event.borderColor
     };
 
     return (
@@ -129,6 +129,7 @@ export class Column extends View{
         component.viewChange.emit({
           event: event.rawEvent,
         });
+        component.selectedEvent = event;
       }}>
         {this.templateRenderer.eventContainer(event)}
       </div>

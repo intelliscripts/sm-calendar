@@ -20,7 +20,7 @@
         width: 90%;
         margin: 10px auto;
         border: 1px solid $border-color;
-        border-left: 3px solid var(--theme-color);
+        border-left: 3px solid $event-border;
         .context-panel-event-header {
           font-size: 14px;
           margin: 5px 10px;

@@ -11,13 +11,15 @@ class CalendarEvent {
   end: string;
   text_color: string;
   bg_color: string;
-  border_color: string;
 
+  borderColor: string;
   isMultiDay: boolean = false;
   chunks: Array<object> = [];
   timezone: string;
   startMoment: Moment;
+  originalStartMoment: Moment;
   endMoment: Moment;
+  originalEndMoment: Moment;
   rawEvent: object;
   style: object;
 
@@ -39,9 +41,11 @@ class CalendarEvent {
 
     if(INTERNAL_DATE_TIME_REGEX.test(this.start)) {
       this.startMoment = moment.tz(rawEvent.start, INTERNAL_FORMAT.DATE_TIME, true, timezone);
+      this.originalStartMoment = this.startMoment.clone();
     }
     if(INTERNAL_DATE_TIME_REGEX.test(this.end)) {
       this.endMoment = moment.tz(rawEvent.end, INTERNAL_FORMAT.DATE_TIME, true, timezone);
+      this.originalEndMoment = this.endMoment.clone();
     }
     if (!this.startMoment.isSame(this.endMoment, 'day')){
       this.isMultiDay = true;
@@ -54,7 +58,7 @@ class CalendarEvent {
       this.bg_color = negate(this.text_color);
     }
     if (this.bg_color) {
-      this.border_color = darken(this.bg_color, 0.2);
+      this.borderColor = darken(this.bg_color, 0.2);
     }
   }
 

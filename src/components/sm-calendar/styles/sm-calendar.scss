@@ -9,6 +9,7 @@
 @import "../calendar/views/column/column";
 @import "../calendar/views/month/month";
 @import "../calendar/views/contextpanel/context-panel";
+@import "../calendar/edit-event/edit-event";
 
 :host {
   --theme-color: teal;
