@@ -68,6 +68,32 @@ export namespace Components {
   }
   interface SmDemoCalendar {}
   interface SmDemoDatePicker {}
+  interface SmTimePicker {
+    /**
+    * hour
+    */
+    'hour': number;
+    /**
+    * isTwelveHourFormat
+    */
+    'isTwelveHourFormat': boolean;
+    /**
+    * meridian
+    */
+    'meridian': string;
+    /**
+    * minute
+    */
+    'minute': number;
+    /**
+    * showPicker
+    */
+    'showPicker': boolean;
+    /**
+    * Theme
+    */
+    'theme': string;
+  }
 }
 
 declare global {
@@ -96,11 +122,18 @@ declare global {
     prototype: HTMLSmDemoDatePickerElement;
     new (): HTMLSmDemoDatePickerElement;
   };
+
+  interface HTMLSmTimePickerElement extends Components.SmTimePicker, HTMLStencilElement {}
+  var HTMLSmTimePickerElement: {
+    prototype: HTMLSmTimePickerElement;
+    new (): HTMLSmTimePickerElement;
+  };
   interface HTMLElementTagNameMap {
     'sm-calendar': HTMLSmCalendarElement;
     'sm-date-picker': HTMLSmDatePickerElement;
     'sm-demo-calendar': HTMLSmDemoCalendarElement;
     'sm-demo-date-picker': HTMLSmDemoDatePickerElement;
+    'sm-time-picker': HTMLSmTimePickerElement;
   }
 }
 
@@ -169,12 +202,39 @@ declare namespace LocalJSX {
   }
   interface SmDemoCalendar {}
   interface SmDemoDatePicker {}
+  interface SmTimePicker {
+    /**
+    * hour
+    */
+    'hour'?: number;
+    /**
+    * isTwelveHourFormat
+    */
+    'isTwelveHourFormat'?: boolean;
+    /**
+    * meridian
+    */
+    'meridian'?: string;
+    /**
+    * minute
+    */
+    'minute'?: number;
+    /**
+    * showPicker
+    */
+    'showPicker'?: boolean;
+    /**
+    * Theme
+    */
+    'theme'?: string;
+  }
 
   interface IntrinsicElements {
     'sm-calendar': SmCalendar;
     'sm-date-picker': SmDatePicker;
     'sm-demo-calendar': SmDemoCalendar;
     'sm-demo-date-picker': SmDemoDatePicker;
+    'sm-time-picker': SmTimePicker;
   }
 }
 
@@ -188,6 +248,7 @@ declare module "@stencil/core" {
       'sm-date-picker': LocalJSX.SmDatePicker & JSXBase.HTMLAttributes<HTMLSmDatePickerElement>;
       'sm-demo-calendar': LocalJSX.SmDemoCalendar & JSXBase.HTMLAttributes<HTMLSmDemoCalendarElement>;
       'sm-demo-date-picker': LocalJSX.SmDemoDatePicker & JSXBase.HTMLAttributes<HTMLSmDemoDatePickerElement>;
+      'sm-time-picker': LocalJSX.SmTimePicker & JSXBase.HTMLAttributes<HTMLSmTimePickerElement>;
     }
   }
 }

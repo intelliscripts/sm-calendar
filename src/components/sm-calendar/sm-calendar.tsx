@@ -149,7 +149,11 @@ export class SmCalendar {
       }
     }
     if (!clickedInsideDatePicker) {
-      this.ref.shadowRoot.querySelector('sm-date-picker').showPicker = false;
+      const datePickers = this.ref.shadowRoot.querySelectorAll('sm-date-picker');
+      datePickers.forEach((datePicker) => {
+        datePicker.showPicker = false;
+      });
+
     }
   }
 

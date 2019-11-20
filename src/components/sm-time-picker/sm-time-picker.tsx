@@ -1,0 +1,70 @@
+import {Component, Prop, h, Host} from '@stencil/core';
+
+import timePicker from './timepicker/TimePicker';
+
+@Component({
+  tag: 'sm-time-picker',
+  styleUrl: './styles/sm-time-picker.scss',
+  shadow: true
+})
+export class SmTimePicker {
+  /**
+   * Theme
+   */
+  @Prop({
+    reflect: true,
+    mutable: true,
+  }) theme: string = 'teal';
+
+  /**
+   * hour
+   */
+  @Prop({
+    reflect: true,
+    mutable: true,
+  }) hour: number = 0;
+
+  /**
+   * minute
+   */
+  @Prop({
+    reflect: true,
+    mutable: true,
+  }) minute: number = 0;
+
+  /**
+   * showPicker
+   */
+  @Prop({
+    reflect: true,
+    mutable: true,
+  }) showPicker: boolean = false;
+
+  /**
+   * isTwelveHourFormat
+   */
+  @Prop({
+    reflect: true,
+    mutable: true,
+  }) isTwelveHourFormat: boolean = false;
+
+  /**
+   * meridian
+   */
+  @Prop({
+    reflect: true,
+    mutable: true,
+  }) meridian: string = 'am';
+
+  render() {
+    return (
+      <Host style={{'--theme-color': this.theme}}>
+        <div class='sm-time-picker'>
+          <div class='sm-time-picker-container'>
+            {timePicker.render(this)}
+          </div>
+        </div>
+      </Host>
+    );
+  }
+}

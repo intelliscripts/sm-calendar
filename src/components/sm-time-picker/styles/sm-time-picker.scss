@@ -1,0 +1,76 @@
+@import "~reset-css/reset.css";
+@import "variables";
+
+@import "custom-styles";
+
+:host {
+  --theme-color: teal;
+}
+
+.sm-time-picker {
+  min-width: 100px;
+  border-bottom: 1px solid #aaa;
+  position: relative;
+  font-family: 'Open Sans', sans-serif;
+  .today-button {
+    float: right;
+  }
+  .sm-time-picker-container {
+    .sm-time-picker-dropdown {
+      padding: 8px;
+      text-align: center;
+      font-weight: 300;
+      .down-triangle {
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-top: 7px solid black;
+        float: right;
+        margin-top: 5px;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .sm-time-picker-popover {
+      position: absolute;
+      top: 38px;
+      left: -1px;
+      width: 200px;
+      box-shadow: 0 0 5px $border-color;
+      height: auto;
+      border: 1px solid $border-color;
+      background: $color-white;
+      z-index: 9;
+      .sm-time-picker-popover-container {
+        padding: 8px;
+        .picker-header {
+
+        }
+        .picker-body {
+          margin-top: 10px;
+          .row {
+            display: flex;
+            margin-bottom: 20px;
+            .column {
+              flex: 1;
+              text-align: center;
+              .up-triangle, .down-triangle {
+                margin: 0 auto;
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+              .hour, .minute {
+                font-size: 18px;
+                font-weight: 200;
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

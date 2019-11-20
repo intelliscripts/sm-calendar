@@ -45,12 +45,15 @@ class Header {
         </div>
         <div class='nav-item'>
           <div class='date-picker'>
-            <sm-date-picker onDateSelected={(payload) => {
-              if (component.contextMoment.format(INTERNAL_FORMAT.DATE) !== payload.detail) {
-                component.contextDate = payload.detail;
-              }
-            }} label={component.viewRenderer.getDatePickerLabel(component)} theme={component.theme} date={component.contextMoment.format(INTERNAL_FORMAT.DATE)} week-start-day={component.weekStartDay}></sm-date-picker>
+            {/*<sm-date-picker onDateSelected={(payload) => {*/}
+            {/*  if (component.contextMoment.format(INTERNAL_FORMAT.DATE) !== payload.detail) {*/}
+            {/*    component.contextDate = payload.detail;*/}
+            {/*  }*/}
+            {/*}} label={component.viewRenderer.getDatePickerLabel(component)} theme={component.theme} date={component.contextMoment.format(INTERNAL_FORMAT.DATE)} week-start-day={component.weekStartDay}>*/}
+            {/*  */}
+            {/*</sm-date-picker>*/}
           </div>
+          <sm-time-picker></sm-time-picker>
          </div>
       </div>
     );

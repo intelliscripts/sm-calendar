@@ -10,7 +10,7 @@ class DatePicker {
     component.showPicker = !component.showPicker;
   }
 
-  renderHeader(component) {
+  renderDropdown(component) {
     return (
       <div class='sm-date-picker-dropdown' onClick={() => this.togglePicker(component)}>
         <span>{component.label || moment(component.date).format('DD MMM YYYY')}</span>
@@ -44,7 +44,7 @@ class DatePicker {
   }
 
   render(component) {
-    return ([this.renderHeader(component), this.renderPicker(component)]);
+    return ([this.renderDropdown(component), this.renderPicker(component)]);
   }
 }
 
