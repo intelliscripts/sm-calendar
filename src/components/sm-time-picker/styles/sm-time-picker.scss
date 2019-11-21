@@ -2,6 +2,9 @@
 @import "variables";
 
 @import "custom-styles";
+@import "../timepicker/views/time/time-view";
+@import "../timepicker/views/hour/hour-view";
+@import "../timepicker/views/minute/minute-view";
 
 :host {
   --theme-color: teal;
@@ -43,33 +46,7 @@
       z-index: 9;
       .sm-time-picker-popover-container {
         padding: 8px;
-        .picker-header {
 
-        }
-        .picker-body {
-          margin-top: 10px;
-          .row {
-            display: flex;
-            margin-bottom: 20px;
-            .column {
-              flex: 1;
-              text-align: center;
-              .up-triangle, .down-triangle {
-                margin: 0 auto;
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-              .hour, .minute {
-                font-size: 18px;
-                font-weight: 200;
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-          }
-        }
       }
     }
   }

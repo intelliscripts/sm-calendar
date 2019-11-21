@@ -1,6 +1,7 @@
-import {Component, Prop, h, Host} from '@stencil/core';
+import {Component, Prop, h, Host, State, Watch, Event, EventEmitter} from '@stencil/core';
 
 import timePicker from './timepicker/TimePicker';
+import {PICKER_VIEWS} from "./timepicker/constants";
 
 @Component({
   tag: 'sm-time-picker',
@@ -55,6 +56,41 @@ export class SmTimePicker {
     reflect: true,
     mutable: true,
   }) meridian: string = 'am';
+
+  @State() pickerView: string = PICKER_VIEWS.TIME;
+  @State() contextHour: number = this.hour;
+  @State() contextMinute: number = this.minute;
+
+  @Watch('hour') handleHourChange(hour: string) {
+    this.timeSelected.emit({
+      hour,
+      minute: this.minute,
+    });
+    this.contextHour =this.hour;
+    this.contextMinute =this.minute;
+  }
+
+  @Watch('minute') handleMinuteChange(minute: string) {
+    this.timeSelected.emit({
+      minute,
+      hour: this.hour
+    });
+    this.contextHour =this.hour;
+    this.contextMinute =this.minute;
+  }
+
+  @Watch('showPicker') handleShowPickerChange() {
+    this.pickerView = PICKER_VIEWS.TIME;
+    this.contextHour =this.hour;
+    this.contextMinute =this.minute;
+  }
+
+  @Event({
+    eventName: 'timeSelected',
+    composed: true,
+    cancelable: true,
+    bubbles: true,
+  }) timeSelected: EventEmitter;
 
   render() {
     return (

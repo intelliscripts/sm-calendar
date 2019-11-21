@@ -17,6 +17,13 @@
 | `theme`              | `theme`                 | Theme              | `string`  | `'teal'` |
 
 
+## Events
+
+| Event          | Description | Type               |
+| -------------- | ----------- | ------------------ |
+| `timeSelected` |             | `CustomEvent<any>` |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

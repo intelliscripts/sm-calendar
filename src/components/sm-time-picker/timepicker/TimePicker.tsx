@@ -1,4 +1,9 @@
 import {h} from "@stencil/core";
+import {PICKER_VIEWS} from "./constants";
+import timeView from './views/time/Time';
+import hourView from './views/hour/Hour';
+import minuteView from './views/minute/Minute';
+import {getDisplayValue} from "./utils/time-utils";
 
 export class TimePicker {
 
@@ -6,28 +11,14 @@ export class TimePicker {
     component.showPicker = !component.showPicker;
   }
 
-  getHour(component) {
-    if (component.hour.toString().length === 1) {
-      return '0' + component.hour;
-    }
-    return component.hour;
-  }
-
-  getMinute(component) {
-    if (component.minute.toString().length === 1) {
-      return '0' + component.minute;
-    }
-    return component.minute;
-  }
-
-  getDisplayTime(component) {
-    return this.getHour(component) + ':' + this.getMinute(component);
+  getTime(component) {
+    return getDisplayValue(component.hour) + ':' + getDisplayValue(component.minute);
   }
 
   renderDropdown(component) {
     return (
       <div class='sm-time-picker-dropdown' onClick={() => this.togglePicker(component)}>
-        <span>{component.label || this.getDisplayTime(component)}</span>
+        <span>{component.label || this.getTime(component)}</span>
         <div class="down-triangle">
         </div>
       </div>
@@ -37,65 +28,29 @@ export class TimePicker {
   renderPicker(component) {
     const {showPicker} = component;
 
+    let currentView;
+
     if (!showPicker) {
       return
+    }
+
+    if (component.pickerView === PICKER_VIEWS.TIME) {
+      currentView = timeView.render(component);
+    }
+    if (component.pickerView === PICKER_VIEWS.HOUR) {
+      currentView = hourView.render(component);
+    }
+    if (component.pickerView === PICKER_VIEWS.MINUTE) {
+      currentView = minuteView.render(component);
     }
 
     return (
       <div class='sm-time-picker-popover'>
         <div class='sm-time-picker-popover-container'>
-          {this.renderPickerHeader(component)}
-          {this.renderPickerBody(component)}
+          {currentView}
         </div>
       </div>
     );
-  }
-
-  renderPickerHeader(_component) {
-    return (<div class='picker-header'>
-
-    </div>);
-  }
-
-  renderPickerBody(component) {
-    return (<div class='picker-body'>
-      <div class='row'>
-        <div class='column'>
-          <div class='up-triangle'>
-
-          </div>
-        </div>
-        <div class='column'>
-          <div class='up-triangle'>
-
-          </div>
-        </div>
-      </div>
-      <div class='row'>
-        <div class='column'>
-          <div class='hour'>
-            {this.getHour(component)}
-          </div>
-        </div>
-        <div class='column'>
-          <div class='minute'>
-            {this.getMinute(component)}
-          </div>
-        </div>
-      </div>
-      <div class='row'>
-        <div class='column'>
-          <div class='down-triangle'>
-
-          </div>
-        </div>
-        <div class='column'>
-          <div class='down-triangle'>
-
-          </div>
-        </div>
-      </div>
-    </div>);
   }
 
   render(component) {

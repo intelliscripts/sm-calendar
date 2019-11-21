@@ -219,6 +219,7 @@ declare namespace LocalJSX {
     * minute
     */
     'minute'?: number;
+    'onTimeSelected'?: (event: CustomEvent<any>) => void;
     /**
     * showPicker
     */

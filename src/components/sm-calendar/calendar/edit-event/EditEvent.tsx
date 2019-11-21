@@ -34,17 +34,29 @@ export class EditEvent {
       <div class='form-row'>
         <label class='form-label'>Start time</label>
         <div class='form-element date-time-picker'>
-          <sm-date-picker onDateSelected={(_payload) => {
-          }} theme={component.theme} date={component.selectedEvent.originalStartMoment.format(INTERNAL_FORMAT.DATE)} week-start-day={component.weekStartDay}></sm-date-picker>
+          <div class='date-picker'>
+            <sm-date-picker onDateSelected={(_payload) => {
+            }} theme={component.theme} date={component.selectedEvent.originalStartMoment.format(INTERNAL_FORMAT.DATE)} week-start-day={component.weekStartDay}></sm-date-picker>
 
+          </div>
+          <div class='time-picker'>
+            <sm-time-picker hour={component.selectedEvent.originalStartMoment.hour()} minute={component.selectedEvent.originalStartMoment.minute()}></sm-time-picker>
+          </div>
         </div>
       </div>
 
       <div class='form-row'>
         <label class='form-label'>End time</label>
         <div class='form-element date-time-picker'>
-          <sm-date-picker onDateSelected={(_payload) => {
-          }} theme={component.theme} date={component.selectedEvent.originalEndMoment.format(INTERNAL_FORMAT.DATE)} week-start-day={component.weekStartDay}></sm-date-picker>
+          <div class='date-picker'>
+            <sm-date-picker onDateSelected={(_payload) => {
+            }} theme={component.theme} date={component.selectedEvent.originalEndMoment.format(INTERNAL_FORMAT.DATE)} week-start-day={component.weekStartDay}></sm-date-picker>
+
+          </div>
+          <div class='time-picker'>
+            <sm-time-picker hour={component.selectedEvent.originalEndMoment.hour()} minute={component.selectedEvent.originalEndMoment.minute()}></sm-time-picker>
+          </div>
+
 
         </div>
       </div>

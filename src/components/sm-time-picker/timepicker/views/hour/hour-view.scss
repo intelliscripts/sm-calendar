@@ -1,0 +1,30 @@
+.hour-view-container {
+  .picker-body {
+    .hour-row {
+      display: flex;
+      .hour-cell {
+        flex: 1;
+        &.selected {
+          .hour-number {
+            background: var(--theme-color);
+            color: $color-white !important;
+          }
+        }
+        .hour-number {
+          padding: 5px;
+          font-size: 13px;
+          border-radius: 50%;
+          width: 18px;
+          height: 18px;
+          text-align: center;
+          &:hover {
+            cursor: pointer;
+            background: var(--theme-color);
+            opacity: 0.4;
+            color: $color-white !important;
+          }
+        }
+      }
+    }
+  }
+}

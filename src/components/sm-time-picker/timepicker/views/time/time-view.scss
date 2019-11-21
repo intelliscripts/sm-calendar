@@ -1,0 +1,35 @@
+.time-view-container {
+  .picker-header {
+
+  }
+  .picker-body {
+    margin-top: 10px;
+    .row {
+      display: flex;
+      margin-bottom: 20px;
+      .column {
+        flex: 1;
+        text-align: center;
+        .up-triangle, .down-triangle {
+          margin: 0 auto;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        .hour, .minute {
+          font-size: 18px;
+          font-weight: 200;
+          color: var(--theme-color);
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+  .picker-footer {
+    .ok-button {
+      float: right;
+    }
+  }
+}
