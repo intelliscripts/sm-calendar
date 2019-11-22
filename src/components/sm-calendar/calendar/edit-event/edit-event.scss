@@ -7,9 +7,9 @@
   background: rgba(0,0,0,0.5);
   .event-edit-wrapper {
     background: #fff;
-    width: 600px;
+    width: 450px;
     margin: 100px auto 0;
-    height: 400px;
+    height: 250px;
     padding: 10px;
     border-top: 5px solid $event-border;
     .event-edit-header {
@@ -52,6 +52,14 @@
             }
           }
         }
+      }
+    }
+    .event-edit-footer {
+      margin-top: 20px;
+      button.ok-button {
+        width: 100px;
+        float: right;
+        margin-right: 50px;
       }
     }
   }

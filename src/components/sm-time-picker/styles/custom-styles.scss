@@ -53,4 +53,8 @@
   &:hover {
     cursor: pointer;
   }
+  &.flat {
+    background: var(--theme-color);
+    color: $color-white;
+  }
 }

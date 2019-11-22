@@ -134,6 +134,13 @@ export class SmCalendar {
     bubbles: true,
   }) viewChange: EventEmitter;
 
+  @Event({
+    eventName: EVENTS.EVENT_UPDATE,
+    composed: true,
+    cancelable: true,
+    bubbles: true,
+  }) eventUpdate: EventEmitter;
+
   /**
    *
    * Listners

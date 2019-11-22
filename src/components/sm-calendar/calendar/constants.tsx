@@ -33,5 +33,6 @@ export const INTERNAL_DATE_TIME_REGEX = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 
 export const EVENTS = {
   VIEW_CHANGE: 'viewChange',
-  EVENT_CLICK: 'eventClick'
+  EVENT_CLICK: 'eventClick',
+  EVENT_UPDATE: 'eventUpdate'
 };

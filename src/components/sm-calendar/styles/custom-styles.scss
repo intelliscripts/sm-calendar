@@ -19,6 +19,10 @@
       text-decoration: none;
     }
   }
+  &.flat {
+    background: var(--theme-color);
+    color: $color-white;
+  }
 }
 
 .left-triangle {

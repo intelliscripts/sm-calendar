@@ -61,24 +61,6 @@ export class SmTimePicker {
   @State() contextHour: number = this.hour;
   @State() contextMinute: number = this.minute;
 
-  @Watch('hour') handleHourChange(hour: string) {
-    this.timeSelected.emit({
-      hour,
-      minute: this.minute,
-    });
-    this.contextHour =this.hour;
-    this.contextMinute =this.minute;
-  }
-
-  @Watch('minute') handleMinuteChange(minute: string) {
-    this.timeSelected.emit({
-      minute,
-      hour: this.hour
-    });
-    this.contextHour =this.hour;
-    this.contextMinute =this.minute;
-  }
-
   @Watch('showPicker') handleShowPickerChange() {
     this.pickerView = PICKER_VIEWS.TIME;
     this.contextHour =this.hour;

@@ -28,6 +28,10 @@ export class Time {
           component.hour = component.contextHour;
           component.minute = component.contextMinute;
           component.showPicker = false;
+          component.timeSelected.emit({
+            minute: component.minute,
+            hour: component.hour
+          });
         }}>Ok</button>
       </div>
     );

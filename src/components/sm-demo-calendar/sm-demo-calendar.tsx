@@ -22,9 +22,26 @@ export class SmDemoCalendar {
     return (
       <div class='sm-demo-calendar'>
         <sm-calendar events={this.events} view="month" context-date={this.contextDate} onViewChange={(_payload) => {
-          //console.log(payload.detail);
+          //console.log(_payload.detail);
         }} onEventClick={(_payload) => {
-          //console.log(payload.detail);
+          //console.log(_payload.detail);
+        }} onEventUpdate={(payload) => {
+          const updateEvent = payload.detail.event;
+          const {start, end} = payload.detail.updatedValues;
+
+          const eventsBackUp = this.events;
+
+          eventsBackUp.forEach((event) => {
+            // @ts-ignore
+            if (event.id === updateEvent.id) {
+              // @ts-ignore
+              event.start = start;
+              // @ts-ignore
+              event.end = end;
+            }
+          });
+
+          this.events = [...eventsBackUp];
         }}/>
       </div>
     );

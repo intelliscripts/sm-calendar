@@ -155,6 +155,7 @@ declare namespace LocalJSX {
     * Events
     */
     'onEventClick'?: (event: CustomEvent<any>) => void;
+    'onEventUpdate'?: (event: CustomEvent<any>) => void;
     'onViewChange'?: (event: CustomEvent<any>) => void;
     /**
     * showContextPanel

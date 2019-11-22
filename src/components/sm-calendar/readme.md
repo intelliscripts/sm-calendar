@@ -21,10 +21,11 @@
 
 ## Events
 
-| Event        | Description | Type               |
-| ------------ | ----------- | ------------------ |
-| `eventClick` | Events      | `CustomEvent<any>` |
-| `viewChange` |             | `CustomEvent<any>` |
+| Event         | Description | Type               |
+| ------------- | ----------- | ------------------ |
+| `eventClick`  | Events      | `CustomEvent<any>` |
+| `eventUpdate` |             | `CustomEvent<any>` |
+| `viewChange`  |             | `CustomEvent<any>` |
 
 
 ## Dependencies
