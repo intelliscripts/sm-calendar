@@ -1,5 +1,5 @@
 import {Component, h, State} from '@stencil/core';
-import {getEvents, CONTEXT_DATE} from './utils/event-utils';
+import {getEvents, CONTEXT_DATE, getEvent} from './utils/event-utils';
 
 @Component({
   tag: 'sm-demo-calendar',
@@ -26,6 +26,8 @@ export class SmDemoCalendar {
         }} onEventClick={(_payload) => {
           console.log(_payload.detail);
         }} onCellClick={(_payload) => {
+          const newEvent = getEvent('new event', 'sample description', _payload.detail.from, _payload.detail.to);
+          this.events = [...this.events, newEvent];
           console.log(_payload.detail);
         }} onEventUpdate={(payload) => {
           const updateEvent = payload.detail.event;

@@ -252,9 +252,9 @@ export class Column extends View{
       gridDates.forEach((viewDate) => {
         cols.push(<div class='item' style={{height: this.timeStepHeight + 'px'}} onClick={() => {
           const fromMoment = viewDate.clone().add(this.timeStepDuration * index, 'minutes');
-          const from: string = fromMoment.format('YYYY-MM-DD HH:ss');
+          const from: string = fromMoment.format('YYYY-MM-DD HH:mm:ss');
           const toMoment: Moment = viewDate.clone().add(this.timeStepDuration * index, 'minutes').add(this.timeStepDuration, 'minutes');
-          const to: string = toMoment.format('YYYY-MM-DD HH:ss');
+          const to: string = toMoment.format('YYYY-MM-DD HH:mm:ss');
           component.cellClick.emit({
             view: component.view,
             from,

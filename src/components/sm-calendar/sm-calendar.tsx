@@ -75,7 +75,7 @@ export class SmCalendar {
   @Prop({
     reflect: true,
     mutable: true,
-  }) showContextPanel: boolean = true;
+  }) showContextPanel: boolean = false;
 
   /**
    * state variables

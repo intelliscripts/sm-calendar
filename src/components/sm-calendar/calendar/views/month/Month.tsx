@@ -13,7 +13,6 @@ export class Month extends View{
   private eventLeftMargin: number = 5;
   private eventTopMargin: number = 5;
   private gridCellHeaderHeight = 35;
-  private maxEventsInCell = 3;
   public templateRenderer: MonthTemplateRenderer = templateRenderer;
 
   constructor() {
@@ -29,6 +28,9 @@ export class Month extends View{
   }
 
   renderView(component) {
+    const result = this.getRowHeights(component);
+    component.maxEventsInRowMap = result.maxEventsInRowMap;
+
     const cls: Array<string> = ['view-wrapper'];
 
     return (
@@ -65,39 +67,110 @@ export class Month extends View{
   renderEvents(component) {
 
     const events = [];
-    const links = [];
 
-    const {renderedEvents, viewMoreLinks} = this.getEvents(component);
-
-    renderedEvents.forEach((event) => {
+    this.getEvents(component).renderedEvents.forEach((event) => {
       events.push(this.getEvent(component, event));
-    });
-
-    viewMoreLinks.forEach((viewMoreLink) => {
-      links.push(this.getViewMoreLink(component, viewMoreLink));
     });
 
     return (
       <div class='events-wrapper'>
         {events}
-        {links}
       </div>
     );
   }
 
-  getViewMoreLink(component, viewMoreLink) {
-    return (<div class='view-more' style={viewMoreLink.style} onClick={() => {
-      component.contextDate = viewMoreLink.date.format(INTERNAL_FORMAT.DATE);
-    }}>
-      View More
-    </div>);
+  getRowHeights(component) {
+    const events: Array<CalendarEvent> = [...component.viewRange.events];
+
+    const maxEventsInRowMap = {};
+
+    const gridHeaderDates: Array<Moment> = [...component.viewRange.dates].slice(0, 7);
+
+    const days: Array<number> = [];
+
+    gridHeaderDates.forEach((date) => {
+      days.push(date.day());
+    });
+
+    const gridDates: Array<Moment> = [...component.viewRange.dates];
+
+    const rowMS = [];
+    const rowCount = gridDates.length / 7;
+    for (let i = 0; i < rowCount; i++) {
+      const rowDates: Array<Moment> = gridDates.splice(0, 7);
+      rowMS.push({
+        startMS: rowDates[0].valueOf(),
+        endMS: rowDates[6].valueOf()
+      });
+    }
+
+
+
+    rowMS.forEach((row, index) => {
+      const cellEventsMap = {};
+
+      if (!maxEventsInRowMap[index]) {
+        maxEventsInRowMap[index] = {
+          countInThisRow: 0,
+        };
+      }
+
+      events.forEach((event) => {
+
+        const eventStartMS = event.startMoment.valueOf();
+
+        const eventStartCellIndex:number = days.indexOf(event.startMoment.day());
+        const eventEndCellIndex: number = days.indexOf(event.endMoment.day());
+
+        if (eventStartMS > row.startMS && eventStartMS < row.endMS) {
+
+          let start = eventStartCellIndex;
+
+          while (start <= eventEndCellIndex) {
+            const cellKey: string = index + '_' + start;
+
+            if (!cellEventsMap[cellKey]) {
+              cellEventsMap[cellKey] = {
+                count: 1,
+              };
+            }
+            else {
+              cellEventsMap[cellKey].count = cellEventsMap[cellKey].count + 1;
+            }
+
+            if (cellEventsMap[cellKey].count > maxEventsInRowMap[index].countInThisRow) {
+              maxEventsInRowMap[index].countInThisRow = cellEventsMap[cellKey].count;
+              maxEventsInRowMap[index].height = this.getRowHeight(component, maxEventsInRowMap, index);
+            }
+            start++;
+          }
+        }
+      });
+
+    });
+
+    return {
+      maxEventsInRowMap
+    };
+
   }
+
+
+
+
+
+
+
+
+
+
+
+
 
   getEvents(component) {
     const events: Array<CalendarEvent> = [...component.viewRange.events];
 
     const renderedEvents: Array<CalendarEvent> = [];
-    const viewMoreLinks = [];
 
     const gridHeaderDates: Array<Moment> = [...component.viewRange.dates].slice(0, 7);
 
@@ -143,12 +216,13 @@ export class Month extends View{
         if (eventStartMS > row.startMS && eventStartMS < row.endMS) {
 
           let start = eventStartCellIndex;
+
           while (start <= eventEndCellIndex) {
             const cellKey: string = index + '_' + start;
 
             if (!cellEventsMap[cellKey]) {
               cellEventsMap[cellKey] = {
-                count: 0,
+                count: 1,
                 moreEventsPresent: false
               };
             }
@@ -156,37 +230,23 @@ export class Month extends View{
               cellEventsMap[cellKey].count = cellEventsMap[cellKey].count + 1;
             }
 
-            if (cellEventsMap[cellKey].count >= this.maxEventsInCell) {
-              cellEventsMap[cellKey].moreEventsPresent = true;
-
-              const leftPosition: string = 'calc(' + (((start) / 7) * 100) + '%' + ' + ' + this.eventLeftMargin + 'px' + ')';
-
-              const topPosition: string = 'calc(' + (((index + 1) / rowCount) * 100) + '%' + ' - ' + (16) + 'px' + ')';
-
-              const viewMore = {
-                style: {
-                  top: topPosition,
-                  left: leftPosition,
-                },
-                date: event.startMoment.clone().add(start - eventStartCellIndex, 'days')
-              };
-              viewMoreLinks.push(viewMore);
-            }
-
-
             start++;
           }
 
           const cellKey: string = index + '_' + eventStartCellIndex;
 
-          const topPosition: string = 'calc(' + (((index) / rowCount) * 100) + '%' + ' + ' + (this.gridCellHeaderHeight + (cellEventsMap[cellKey].count * (this.eventHeight + this.eventTopMargin))) + 'px' + ')';
+          let heightTillPreviousRow:number = 0;
+
+          for (let j = 0; j < index; j++) {
+            heightTillPreviousRow = heightTillPreviousRow + component.maxEventsInRowMap[j].height;
+          }
+
+          const topPosition: string = 'calc(' + heightTillPreviousRow + 'px' + ' + ' + (this.gridCellHeaderHeight + ((cellEventsMap[cellKey].count - 1) * (this.eventHeight + this.eventTopMargin))) + 'px' + ')';
 
           style["top"] = topPosition;
           event.style = style;
+          renderedEvents.push(event);
 
-          if (cellEventsMap[cellKey].count < this.maxEventsInCell) {
-            renderedEvents.push(event);
-          }
         }
       });
 
@@ -194,10 +254,17 @@ export class Month extends View{
 
     return {
       renderedEvents,
-      viewMoreLinks
     };
 
   }
+
+
+
+
+
+
+
+
 
   getEvent(component, event: CalendarEvent) {
     const eventStyles: object = {
@@ -233,20 +300,31 @@ export class Month extends View{
     const rows = [];
     const rowCount = gridDates.length / 7;
     for (let i = 0; i < rowCount; i++) {
-      rows.push(this.getRow(component, gridDates.splice(0, 7), rowCount));
+      rows.push(this.getRow(component, gridDates.splice(0, 7), rowCount, i));
     }
     return rows;
   }
 
-  getRow(component, rowDates: Array<Moment>, rowcount: number) {
+  getRowHeight(_component, maxEventsInRowMap, rowIndex) {
+    let {countInThisRow} = maxEventsInRowMap[rowIndex];
+    if (!countInThisRow || countInThisRow < 3) {
+      countInThisRow = 4;
+    }
+    const rowHeight: number = this.gridCellHeaderHeight + countInThisRow * (this.eventHeight + this.eventTopMargin);
+
+    return rowHeight;
+  }
+
+  getRow(component, rowDates: Array<Moment>, _rowcount: number, rowIndex: number) {
     const cols = [];
 
-    const rowHeight = 'calc((var(--component-height) - var(--header-height) - var(--view-header-height) - 10px) / ' + rowcount + ')';
+    const rowHeight = this.getRowHeight(component, component.maxEventsInRowMap, rowIndex) + 'px';
+    //const minRowHeight = 'calc((var(--component-height) - var(--header-height) - var(--view-header-height) - 10px) / ' + rowcount + ')';
 
     rowDates.forEach((rowDate) => {
       cols.push(this.getCellWrapper(component, rowDate, rowHeight));
     });
-    return (<div class='row' style={{'min-height': rowHeight}}>
+    return (<div class='row' style={{'height': rowHeight}}>
       {cols}
     </div>);
   }
@@ -276,8 +354,8 @@ export class Month extends View{
         <div class='cell-wrapper' style={{height: rowHeight}} onClick={() => {
           component.cellClick.emit({
             view: component.view,
-            from: date.format('YYYY-MM-DD HH:ss'),
-            to: date.clone().add(1, 'day').format('YYYY-MM-DD HH:ss')
+            from: date.format('YYYY-MM-DD HH:mm:ss'),
+            to: date.clone().add(1, 'day').add(-1, 'second').format('YYYY-MM-DD HH:mm:ss')
           });
         }}>
           <div class='cell-header' style={{height: this.gridCellHeaderHeight + 'px'}}>

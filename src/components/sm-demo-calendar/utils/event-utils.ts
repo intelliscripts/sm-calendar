@@ -7,7 +7,7 @@ function generateId() {
   return Math.floor(100000000 + Math.random() * 900000000) + '';
 }
 
-function getEvent(title: string, description: string, start: string, end: string, text_color: string = '', bg_color: string = '') {
+export function getEvent(title: string, description: string, start: string, end: string, text_color: string = '', bg_color: string = '') {
   return{
     id: generateId(),
     start,

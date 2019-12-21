@@ -38,9 +38,7 @@
               .grid-wrapper {
                 .row {
                   display: flex;
-                  &:not(:last-child) {
-                    border-bottom: 1px solid $border-color;
-                  }
+                  border-bottom: 1px solid $border-color;
                   box-sizing: border-box;
                   .item {
                     flex: 1;

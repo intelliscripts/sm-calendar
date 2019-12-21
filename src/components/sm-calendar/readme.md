@@ -12,7 +12,7 @@
 | `availableViews`   | --                   | availableViews   | `string[]` | `[VIEWS.day, VIEWS.week, VIEWS.month]`  |
 | `contextDate`      | `context-date`       | contextDate      | `string`   | `moment().format(INTERNAL_FORMAT.DATE)` |
 | `events`           | --                   | events           | `object[]` | `[]`                                    |
-| `showContextPanel` | `show-context-panel` | showContextPanel | `boolean`  | `true`                                  |
+| `showContextPanel` | `show-context-panel` | showContextPanel | `boolean`  | `false`                                 |
 | `theme`            | `theme`              | Theme            | `string`   | `'lightseagreen'`                       |
 | `timezone`         | `timezone`           | timezone         | `string`   | `'GMT'`                                 |
 | `view`             | `view`               | view             | `string`   | `VIEWS.week`                            |
