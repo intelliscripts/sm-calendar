@@ -126,10 +126,10 @@ export class Column extends View{
 
     return (
       <div class='event' style={{...eventStyles}} onClick={() => {
-        component.viewChange.emit({
+        component.eventClick.emit({
           event: event.rawEvent,
         });
-        component.selectedEvent = event;
+        //component.selectedEvent = event;
       }}>
         {this.templateRenderer.eventContainer(event)}
       </div>
@@ -250,8 +250,17 @@ export class Column extends View{
       const cols = [];
 
       gridDates.forEach((viewDate) => {
-        const timeMoment = viewDate.clone().add(this.timeStepDuration * index, 'minutes');
-        cols.push(<div class='item' style={{height: this.timeStepHeight + 'px'}} data-time={timeMoment.format('HH:ss')}>
+        cols.push(<div class='item' style={{height: this.timeStepHeight + 'px'}} onClick={() => {
+          const fromMoment = viewDate.clone().add(this.timeStepDuration * index, 'minutes');
+          const from: string = fromMoment.format('YYYY-MM-DD HH:ss');
+          const toMoment: Moment = viewDate.clone().add(this.timeStepDuration * index, 'minutes').add(this.timeStepDuration, 'minutes');
+          const to: string = toMoment.format('YYYY-MM-DD HH:ss');
+          component.cellClick.emit({
+            view: component.view,
+            from,
+            to
+          });
+        }}>
 
         </div>);
 

@@ -17,6 +17,9 @@
         color: #aaa;
       }
       .context-panel-event {
+        &:hover {
+          cursor: pointer;
+        }
         width: 90%;
         margin: 10px auto;
         border: 1px solid $border-color;

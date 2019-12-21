@@ -44,7 +44,12 @@ class ContextPanel {
 
     if (events.length > 0) {
       events.forEach((event) => {
-        eventsDOM.push(<div class='context-panel-event' style={{'border-left-color': event.borderColor}}>
+        eventsDOM.push(<div class='context-panel-event' style={{'border-left-color': event.borderColor}} onClick={() => {
+          component.eventClick.emit({
+            event: event.rawEvent,
+            isContextPanel: true
+          });
+        }}>
           <div class='context-panel-event-header'>
             <div class='event-time'>
               {event.startMoment.format(INTERNAL_FORMAT.DISPLAY_TIME)} - {event.endMoment.format(INTERNAL_FORMAT.DISPLAY_TIME)}

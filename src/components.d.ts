@@ -143,6 +143,7 @@ declare namespace LocalJSX {
     * events
     */
     'events'?: Array<object>;
+    'onCellClick'?: (event: CustomEvent<any>) => void;
     /**
     * Events
     */

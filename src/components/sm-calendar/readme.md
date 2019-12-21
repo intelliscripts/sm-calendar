@@ -13,7 +13,7 @@
 | `contextDate`      | `context-date`       | contextDate      | `string`   | `moment().format(INTERNAL_FORMAT.DATE)` |
 | `events`           | --                   | events           | `object[]` | `[]`                                    |
 | `showContextPanel` | `show-context-panel` | showContextPanel | `boolean`  | `true`                                  |
-| `theme`            | `theme`              | Theme            | `string`   | `'teal'`                                |
+| `theme`            | `theme`              | Theme            | `string`   | `'lightseagreen'`                       |
 | `timezone`         | `timezone`           | timezone         | `string`   | `'GMT'`                                 |
 | `view`             | `view`               | view             | `string`   | `VIEWS.week`                            |
 | `weekStartDay`     | `week-start-day`     | weekStartDay     | `string`   | `'sun'`                                 |
@@ -23,6 +23,7 @@
 
 | Event         | Description | Type               |
 | ------------- | ----------- | ------------------ |
+| `cellClick`   |             | `CustomEvent<any>` |
 | `eventClick`  | Events      | `CustomEvent<any>` |
 | `eventUpdate` |             | `CustomEvent<any>` |
 | `viewChange`  |             | `CustomEvent<any>` |

@@ -24,7 +24,9 @@ export class SmDemoCalendar {
         <sm-calendar events={this.events} view="month" context-date={this.contextDate} onViewChange={(_payload) => {
           //console.log(_payload.detail);
         }} onEventClick={(_payload) => {
-          //console.log(_payload.detail);
+          console.log(_payload.detail);
+        }} onCellClick={(_payload) => {
+          console.log(_payload.detail);
         }} onEventUpdate={(payload) => {
           const updateEvent = payload.detail.event;
           const {start, end} = payload.detail.updatedValues;

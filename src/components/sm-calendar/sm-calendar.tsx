@@ -18,7 +18,7 @@ export class SmCalendar {
   @Prop({
     reflect: true,
     mutable: true,
-  }) theme: string = 'teal';//lightseagreen
+  }) theme: string = 'lightseagreen';//lightseagreen//#00acc1//teal
 
   /**
    * contextDate
@@ -126,6 +126,13 @@ export class SmCalendar {
     cancelable: true,
     bubbles: true,
   }) eventClick: EventEmitter;
+
+  @Event({
+    eventName: EVENTS.CELL_CLICK,
+    composed: true,
+    cancelable: true,
+    bubbles: true,
+  }) cellClick: EventEmitter;
 
   @Event({
     eventName: EVENTS.VIEW_CHANGE,

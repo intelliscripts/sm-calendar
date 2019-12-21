@@ -212,7 +212,7 @@ export class Month extends View{
         component.eventClick.emit({
           event: event.rawEvent,
         });
-        component.selectedEvent = event;
+        //component.selectedEvent = event;
       }}>
         {this.templateRenderer.eventContainer(event)}
       </div>
@@ -273,12 +273,20 @@ export class Month extends View{
 
     return (
       <div class={cls.join(' ')} style={cellStyles}>
-        <div class='cell-wrapper' style={{height: rowHeight}}>
+        <div class='cell-wrapper' style={{height: rowHeight}} onClick={() => {
+          component.cellClick.emit({
+            view: component.view,
+            from: date.format('YYYY-MM-DD HH:ss'),
+            to: date.clone().add(1, 'day').format('YYYY-MM-DD HH:ss')
+          });
+        }}>
           <div class='cell-header' style={{height: this.gridCellHeaderHeight + 'px'}}>
-            <div class='cell-date' onClick={() => {
+            <div class='cell-date' onClick={(ev) => {
               if (date.isSame(contextMoment, 'month')) {
                 component.contextDate = date.format(INTERNAL_FORMAT.DATE);
               }
+              ev.stopPropagation();
+              ev.preventDefault();
             }}>
               {date.format('DD')}
             </div>
