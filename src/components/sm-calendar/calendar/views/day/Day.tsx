@@ -19,7 +19,7 @@ class Day extends Column {
 
   public getHeaderText(component) {
     return(<div>
-      {component.contextMoment.format('DD MMM YYYY')}
+      {component.contextMoment.format('DD MMMM YYYY')}
     </div>);
   }
 

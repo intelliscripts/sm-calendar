@@ -43,11 +43,27 @@
         }
       }
       .view-list {
-        margin-top: 9px;
+        margin-top: 7px;
         float: right;
         margin-right: 25px;
-        button.view-name {
-          margin: 0px -1px;
+        display: flex;
+        background: $color-white;
+        border-radius: 3px;
+        border: 1px solid $border-color;
+        .view-name {
+          flex: 1;
+          padding: 8px 15px;
+          height: 18px;
+          &:not(:last-child) {
+            border-right: 1px solid $border-color;
+          }
+          &.active {
+            background: var(--theme-color);
+            color: $color-white;
+          }
+          &:hover {
+            cursor: pointer;
+          }
         }
       }
     }

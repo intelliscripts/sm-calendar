@@ -12,7 +12,7 @@ class Header {
           </div>
           <div class='header-section'>
             <div class='context-date-label'>
-              {component.viewRenderer.getDatePickerLabel(component)}
+              {component.viewRenderer.getHeaderText(component)}
             </div>
           </div>
           <div class='header-section'>
@@ -73,15 +73,15 @@ class Header {
     const buttons = [];
 
     availableViews.forEach((view) => {
-      const cls: Array<string> = ['view-name', 'sm-button primary'];
+      const cls: Array<string> = ['view-name'];
       if (view === component.view) {
         cls.push('active');
       }
-      buttons.push(<button class={cls.join(' ')} onClick={() => {
+      buttons.push(<div class={cls.join(' ')} onClick={() => {
         component.view = view;
       }}>
         {VIEW_LABELS[view]}
-      </button>);
+      </div>);
     });
     return (
       <div class='view-list'>

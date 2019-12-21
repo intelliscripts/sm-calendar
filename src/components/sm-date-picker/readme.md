@@ -23,19 +23,6 @@
 | `dateSelected` |             | `CustomEvent<any>` |
 
 
-## Dependencies
-
-### Used by
-
- - [sm-demo-date-picker](../sm-demo-date-picker)
-
-### Graph
-```mermaid
-graph TD;
-  sm-demo-date-picker --> sm-date-picker
-  style sm-date-picker fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

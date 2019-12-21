@@ -67,7 +67,6 @@ export namespace Components {
     'weekStartDay': string;
   }
   interface SmDemoCalendar {}
-  interface SmDemoDatePicker {}
   interface SmTimePicker {
     /**
     * hour
@@ -117,12 +116,6 @@ declare global {
     new (): HTMLSmDemoCalendarElement;
   };
 
-  interface HTMLSmDemoDatePickerElement extends Components.SmDemoDatePicker, HTMLStencilElement {}
-  var HTMLSmDemoDatePickerElement: {
-    prototype: HTMLSmDemoDatePickerElement;
-    new (): HTMLSmDemoDatePickerElement;
-  };
-
   interface HTMLSmTimePickerElement extends Components.SmTimePicker, HTMLStencilElement {}
   var HTMLSmTimePickerElement: {
     prototype: HTMLSmTimePickerElement;
@@ -132,7 +125,6 @@ declare global {
     'sm-calendar': HTMLSmCalendarElement;
     'sm-date-picker': HTMLSmDatePickerElement;
     'sm-demo-calendar': HTMLSmDemoCalendarElement;
-    'sm-demo-date-picker': HTMLSmDemoDatePickerElement;
     'sm-time-picker': HTMLSmTimePickerElement;
   }
 }
@@ -202,7 +194,6 @@ declare namespace LocalJSX {
     'weekStartDay'?: string;
   }
   interface SmDemoCalendar {}
-  interface SmDemoDatePicker {}
   interface SmTimePicker {
     /**
     * hour
@@ -235,7 +226,6 @@ declare namespace LocalJSX {
     'sm-calendar': SmCalendar;
     'sm-date-picker': SmDatePicker;
     'sm-demo-calendar': SmDemoCalendar;
-    'sm-demo-date-picker': SmDemoDatePicker;
     'sm-time-picker': SmTimePicker;
   }
 }
@@ -249,7 +239,6 @@ declare module "@stencil/core" {
       'sm-calendar': LocalJSX.SmCalendar & JSXBase.HTMLAttributes<HTMLSmCalendarElement>;
       'sm-date-picker': LocalJSX.SmDatePicker & JSXBase.HTMLAttributes<HTMLSmDatePickerElement>;
       'sm-demo-calendar': LocalJSX.SmDemoCalendar & JSXBase.HTMLAttributes<HTMLSmDemoCalendarElement>;
-      'sm-demo-date-picker': LocalJSX.SmDemoDatePicker & JSXBase.HTMLAttributes<HTMLSmDemoDatePickerElement>;
       'sm-time-picker': LocalJSX.SmTimePicker & JSXBase.HTMLAttributes<HTMLSmTimePickerElement>;
     }
   }

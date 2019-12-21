@@ -320,7 +320,7 @@ export class Month extends View{
 
   public getHeaderText(component) {
     return(<div>
-      {component.contextMoment.format('MMM YYYY')}
+      {component.contextMoment.format('MMMM YYYY')}
     </div>);
   }
 
