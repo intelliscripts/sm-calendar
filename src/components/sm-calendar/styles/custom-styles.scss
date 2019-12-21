@@ -26,25 +26,29 @@
 }
 
 .left-triangle {
-  margin-right: 10px;
   width: 0;
   height: 0;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-right: 8px solid var(--theme-color);
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid #444444;
   &:hover {
     cursor: pointer;
   }
 }
 
 .right-triangle {
-  margin-left: 10px;
   width: 0;
   height: 0;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-left: 8px solid var(--theme-color);
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid #444444;
   &:hover {
     cursor: pointer;
+  }
+}
+
+.btn-list {
+  display: flex;
+  .btn-list-item {
   }
 }

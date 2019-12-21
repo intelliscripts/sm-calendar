@@ -10,14 +10,21 @@
 }
 
 .sm-date-picker {
-  min-width: 100px;
-  border-bottom: 1px solid #aaa;
   position: relative;
   font-family: 'Open Sans', sans-serif;
   .today-button {
     float: right;
   }
 .sm-date-picker-container {
+  .sm-date-picker-icon {
+    img {
+      width: 25px;
+      height: 25px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
     .sm-date-picker-dropdown {
       padding: 8px;
       text-align: center;

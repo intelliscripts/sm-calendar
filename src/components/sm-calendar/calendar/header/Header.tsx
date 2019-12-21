@@ -11,6 +11,11 @@ class Header {
             {this.renderViewNavigation(component)}
           </div>
           <div class='header-section'>
+            <div class='context-date-label'>
+              {component.viewRenderer.getDatePickerLabel(component)}
+            </div>
+          </div>
+          <div class='header-section'>
             {this.renderViewButton(component)}
           </div>
         </div>
@@ -27,20 +32,25 @@ class Header {
     return (
       <div class='view-navigation'>
         <div class='nav-item'>
-          <div class="left-triangle" onClick={() => {
-            component.viewRenderer.prev(component);
-          }}>
-          </div>
-        </div>
-        <div class='nav-item'>
-          <button class='sm-button primary' onClick={() => {
-            component.contextDate = moment().startOf('day').format(INTERNAL_FORMAT.DATE);
-          }}>Today</button>
-        </div>
-        <div class='nav-item'>
-          <div class="right-triangle" onClick={() => {
-            component.viewRenderer.next(component);
-          }}>
+          <div class='btn-list'>
+            <div class='btn-list-item'>
+              <div class="left-triangle" onClick={() => {
+                component.viewRenderer.prev(component);
+              }}>
+              </div>
+            </div>
+            <div class='btn-list-item'>
+              <div class='today-button' onClick={() => {
+                component.contextDate = moment().startOf('day').format(INTERNAL_FORMAT.DATE);
+              }}>Today
+              </div>
+            </div>
+            <div class='btn-list-item'>
+              <div class="right-triangle" onClick={() => {
+                component.viewRenderer.next(component);
+              }}>
+              </div>
+            </div>
           </div>
         </div>
         <div class='nav-item'>
