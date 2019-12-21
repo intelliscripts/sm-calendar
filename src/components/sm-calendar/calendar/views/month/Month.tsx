@@ -113,6 +113,7 @@ export class Month extends View{
         maxEventsInRowMap[index] = {
           countInThisRow: 0,
         };
+        maxEventsInRowMap[index].height = this.getRowHeight(component, maxEventsInRowMap, index);
       }
 
       events.forEach((event) => {
@@ -213,7 +214,7 @@ export class Month extends View{
 
       rowMS.forEach((row, index) => {
 
-        if (eventStartMS > row.startMS && eventStartMS < row.endMS) {
+        if (eventStartMS >= row.startMS && eventStartMS <= row.endMS) {
 
           let start = eventStartCellIndex;
 
@@ -222,7 +223,7 @@ export class Month extends View{
 
             if (!cellEventsMap[cellKey]) {
               cellEventsMap[cellKey] = {
-                count: 1,
+                count: 0,
                 moreEventsPresent: false
               };
             }
@@ -241,7 +242,7 @@ export class Month extends View{
             heightTillPreviousRow = heightTillPreviousRow + component.maxEventsInRowMap[j].height;
           }
 
-          const topPosition: string = 'calc(' + heightTillPreviousRow + 'px' + ' + ' + (this.gridCellHeaderHeight + ((cellEventsMap[cellKey].count - 1) * (this.eventHeight + this.eventTopMargin))) + 'px' + ')';
+          const topPosition: string = 'calc(' + heightTillPreviousRow + 'px' + ' + ' + (this.gridCellHeaderHeight + ((cellEventsMap[cellKey].count) * (this.eventHeight + this.eventTopMargin))) + 'px' + ')';
 
           style["top"] = topPosition;
           event.style = style;
@@ -306,9 +307,9 @@ export class Month extends View{
   }
 
   getRowHeight(_component, maxEventsInRowMap, rowIndex) {
-    let {countInThisRow} = maxEventsInRowMap[rowIndex];
-    if (!countInThisRow || countInThisRow < 3) {
-      countInThisRow = 4;
+    let countInThisRow = 4;
+    if (maxEventsInRowMap[rowIndex] && maxEventsInRowMap[rowIndex].countInThisRow > 4) {
+      countInThisRow = maxEventsInRowMap[rowIndex].countInThisRow;
     }
     const rowHeight: number = this.gridCellHeaderHeight + countInThisRow * (this.eventHeight + this.eventTopMargin);
 
