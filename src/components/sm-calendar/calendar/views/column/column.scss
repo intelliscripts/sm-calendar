@@ -105,6 +105,9 @@
               .item {
                 flex: 1;
                 border-left: 1px solid $border-color;
+                &:hover {
+                  cursor: crosshair;
+                }
               }
             }
           }

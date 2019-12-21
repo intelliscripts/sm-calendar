@@ -45,6 +45,9 @@
                   .item {
                     flex: 1;
                     overflow: hidden;
+                    &:hover {
+                      cursor: crosshair;
+                    }
                     &:not(:first-child) {
                       .cell-wrapper {
                         border-left: 1px solid $border-color;
