@@ -100,7 +100,7 @@ export class Month extends View{
       const rowDates: Array<Moment> = gridDates.splice(0, 7);
       rowMS.push({
         startMS: rowDates[0].valueOf(),
-        endMS: rowDates[6].valueOf()
+        endMS: rowDates[6].clone().endOf('day').valueOf()
       });
     }
 
@@ -189,12 +189,13 @@ export class Month extends View{
       const rowDates: Array<Moment> = gridDates.splice(0, 7);
       rowMS.push({
         startMS: rowDates[0].valueOf(),
-        endMS: rowDates[6].valueOf()
+        endMS: rowDates[6].clone().endOf('day').valueOf()
       });
     }
 
     const cellEventsMap = {};
 
+    console.log(events);
     events.forEach((event) => {
       const eventStartMS = event.startMoment.valueOf();
 
