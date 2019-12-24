@@ -74,9 +74,6 @@
                         .cell-header {
                           .cell-date {
                             color: $text-color-grey-out;
-                            &:hover {
-                              cursor: not-allowed;
-                            }
                           }
                         }
                       }

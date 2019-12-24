@@ -1,5 +1,5 @@
 import {h} from "@stencil/core";
-import {INTERNAL_FORMAT} from "../../constants";
+import {INTERNAL_FORMAT, VIEWS} from "../../constants";
 import moment, {Moment} from 'moment-timezone';
 import {View} from "../view/View";
 import CalendarEvent from "../../utils/events/CalendarEvent";
@@ -329,6 +329,7 @@ export class Column extends View{
         <div class='view-header-column'>
           <div class='day-date' onClick={() => {
             component.contextDate = date.format(INTERNAL_FORMAT.DATE);
+            component.view = VIEWS.day;
           }}>
             {date.format('DD')}
           </div>

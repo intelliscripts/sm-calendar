@@ -2,7 +2,7 @@ import {h} from "@stencil/core";
 import {View} from "../view/View";
 import {calculateDateRange} from './month-utils';
 import moment, {Moment} from "moment-timezone";
-import {INTERNAL_FORMAT} from "../../constants";
+import {INTERNAL_FORMAT, VIEWS} from "../../constants";
 import CalendarEvent from "../../utils/events/CalendarEvent";
 import templateRenderer, {MonthTemplateRenderer} from "../month/MonthTemplateRenderer";
 import {fade} from "../../utils/common/color-utils";
@@ -362,9 +362,8 @@ export class Month extends View{
         }}>
           <div class='cell-header' style={{height: this.gridCellHeaderHeight + 'px'}}>
             <div class='cell-date' onClick={(ev) => {
-              if (date.isSame(contextMoment, 'month')) {
-                component.contextDate = date.format(INTERNAL_FORMAT.DATE);
-              }
+              component.contextDate = date.format(INTERNAL_FORMAT.DATE);
+              component.view = VIEWS.day;
               ev.stopPropagation();
               ev.preventDefault();
             }}>
