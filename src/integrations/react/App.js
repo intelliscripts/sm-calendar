@@ -8,14 +8,14 @@ class App extends Component {
         end: '2019-11-26 04:00:00',
         title: 'testing',
         description: 'testing',
-        bg_color: '#d2e7e3'
+        background: '#d2e7e3'
     },
         {
             start: '2019-11-27 04:00:00',
             end: '2019-11-27 12:00:00',
             title: 'testing',
             description: 'testing',
-            bg_color: '#e9e1f1'
+            background: '#e9e1f1'
         }];
 
     test(payload) {

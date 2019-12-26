@@ -10,7 +10,7 @@ class CalendarEvent {
   start: string;
   end: string;
   text_color: string;
-  bg_color: string;
+  background: string;
 
   borderColor: string;
   isMultiDay: boolean = false;
@@ -35,7 +35,7 @@ class CalendarEvent {
     this.start = rawEvent.start;
     this.end = rawEvent.end;
     this.text_color = rawEvent.text_color;
-    this.bg_color = rawEvent.bg_color;
+    this.background = rawEvent.background;
     this.timezone = timezone;
     this.rawEvent = rawEvent;
 
@@ -51,14 +51,14 @@ class CalendarEvent {
       this.isMultiDay = true;
     }
 
-    if (this.bg_color && !this.text_color) {
-      this.text_color = negate(this.bg_color);
+    if (this.background && !this.text_color) {
+      this.text_color = negate(this.background);
     }
-    if (this.text_color && !this.bg_color) {
-      this.bg_color = negate(this.text_color);
+    if (this.text_color && !this.background) {
+      this.background = negate(this.text_color);
     }
-    if (this.bg_color) {
-      this.borderColor = darken(this.bg_color, 0.2);
+    if (this.background) {
+      this.borderColor = darken(this.background, 0.2);
     }
   }
 

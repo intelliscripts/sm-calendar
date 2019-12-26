@@ -119,7 +119,7 @@ export class Column extends View{
   getEvent(component, event: CalendarEvent) {
     const eventStyles: object = {
       ...event.style,
-      background: event.bg_color,
+      background: event.background,
       color: event.text_color,
       ['border-color']: event.borderColor
     };
